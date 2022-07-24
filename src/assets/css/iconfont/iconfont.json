@@ -1,0 +1,72 @@
+{
+  "id": "3543610",
+  "name": "lilMartin_music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15591650",
+      "name": "netease-cloud-music-fill",
+      "font_class": "lil-netease",
+      "unicode": "e97e",
+      "unicode_decimal": 59774
+    },
+    {
+      "icon_id": "30807798",
+      "name": "setting-filling-copy",
+      "font_class": "lil-setting-active",
+      "unicode": "e751",
+      "unicode_decimal": 59217
+    },
+    {
+      "icon_id": "30807800",
+      "name": "Logout-copy",
+      "font_class": "lil-login-active-copy",
+      "unicode": "e752",
+      "unicode_decimal": 59218
+    },
+    {
+      "icon_id": "30807801",
+      "name": "Logout-copy",
+      "font_class": "lil-logout",
+      "unicode": "e753",
+      "unicode_decimal": 59219
+    },
+    {
+      "icon_id": "30807803",
+      "name": "Logout-copy-copy",
+      "font_class": "lil-logout-active-copy",
+      "unicode": "e754",
+      "unicode_decimal": 59220
+    },
+    {
+      "icon_id": "33519",
+      "name": "home_fill",
+      "font_class": "lil-home",
+      "unicode": "e6bb",
+      "unicode_decimal": 59067
+    },
+    {
+      "icon_id": "15838607",
+      "name": "setting-filling",
+      "font_class": "lil-setting",
+      "unicode": "e68b",
+      "unicode_decimal": 59019
+    },
+    {
+      "icon_id": "19705580",
+      "name": "Logout",
+      "font_class": "lil-login",
+      "unicode": "e74f",
+      "unicode_decimal": 59215
+    },
+    {
+      "icon_id": "30807775",
+      "name": "home_fill-copy",
+      "font_class": "homefill-active",
+      "unicode": "e750",
+      "unicode_decimal": 59216
+    }
+  ]
+}
