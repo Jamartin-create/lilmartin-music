@@ -31,9 +31,10 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     //需要登录
     if (to.meta.requireLogin) {
-        if (isAccountLogin) {
+        if (isAccountLogin()) {
             next()
         } else {
+            console.log('login')
             next({ path: '/login' })
         }
     } else {
