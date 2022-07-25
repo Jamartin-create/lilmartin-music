@@ -5,6 +5,9 @@ import Vue from 'vue'
 import user from './user'
 
 //vuex自定义插件
+/**
+ * vuex自定义插件在对应的mutations执行后自动执行，用于处理一些数据实时更新的操作
+ */
 import userPlugins from './user/userPlugins'
 const plugins = [userPlugins]
 

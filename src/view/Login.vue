@@ -46,6 +46,7 @@ export default {
       fetchUserAccount: "fetchUserAccount",
       fetchUserPlayList: "fetchUserPlayList",
     }),
+    //生成二维码
     generateQrCode() {
       return getQrCodeKey().then((res) => {
         console.log(res);
@@ -78,6 +79,7 @@ export default {
         this.checkQrCodeLogin();
       });
     },
+    //判断二维码状态
     checkQrCodeLogin() {
       this.qrCodeCheckInterval = setInterval(() => {
         if (this.qrCodeKey === "") return;
@@ -97,6 +99,7 @@ export default {
         });
       }, 1000);
     },
+    //登陆成功回调
     handleLogin(data) {
       if (data.code === 200) {
         //添加token：注明登录状态
