@@ -1,6 +1,6 @@
 import request from '@/util/requets'
 
-//获取账户信息
+// 获取账户信息
 export const getUserAccount = () => {
     return request({
         method: 'get',
@@ -25,11 +25,11 @@ export const getUserPlayList = (params) => {
         params: {
             ...params,
             timestamp: new Date().getTime()
-        },
+        }
     })
 }
 
-//退出登录
+// 退出登录
 export const logout = () => {
     return request({
         method: 'get',

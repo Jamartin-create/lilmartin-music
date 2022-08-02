@@ -6,17 +6,13 @@
     <main>
       <router-view></router-view>
     </main>
+    <player></player>
   </div>
 </template>
 
 <script>
-import SideBar from "./components/SideBar.vue";
-
 export default {
   name: "App",
-  components: {
-    SideBar,
-  },
 };
 </script>
 
@@ -32,5 +28,9 @@ export default {
   width: 100%;
   height: 100vh;
   display: flex;
+  position: relative;
+  main {
+    width: 100%;
+  }
 }
 </style>
