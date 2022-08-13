@@ -1,7 +1,5 @@
 <template>
   <div class="container">
-    <input name="keyword" v-model="searchKeyWords" />
-    <button @click="searchByKeys">查询歌曲</button>
     <play-list :playList="playList"></play-list>
   </div>
 </template>

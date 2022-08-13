@@ -1,22 +1,27 @@
 <template>
   <div id="app">
-    <side-bar id="sider"></side-bar>
-    <!-- <router-link :to="{ name: 'mine' }">我的</router-link>
-    <router-link to="/login">登录</router-link> -->
+    <side-bar></side-bar>
     <main>
       <router-view></router-view>
     </main>
-    <player></player>
+    <!-- <player></player> -->
   </div>
 </template>
 
 <script>
 export default {
   name: "App",
+  mounted() {
+    //判断皮肤状态
+    if (!this.$store.state.sys.data.isLight) {
+      document.querySelector("body").classList.add("dark");
+    }
+  },
 };
 </script>
 
 <style>
+@import url(@/assets/css/global.css);
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,13 +29,20 @@ export default {
 </style>
 
 <style lang="less" scoped>
-#app {
-  width: 100%;
+main {
+  position: absolute;
+  top: 0;
+  left: 250px;
   height: 100vh;
-  display: flex;
-  position: relative;
-  main {
-    width: 100%;
-  }
+  width: calc(100% - 250px);
+  transition: var(--tran-03);
+
+  padding: 10px 14px;
+}
+#sidebar.close ~ main {
+  left: 88px;
+  height: 100vh;
+  width: calc(100% - 88px);
+  transition: var(--tran-03);
 }
 </style>

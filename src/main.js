@@ -6,6 +6,8 @@ import "@/util/filter";
 import "nprogress/nprogress.css";
 import "@/assets/css/iconfont/iconfont";
 import "@/assets/css/iconfont/iconfont.css";
+import "@/assets/css/sidebaricon/iconfont";
+import "@/assets/css/sidebaricon/iconfont.css";
 
 import Sider from "@/components/SideBar.vue";
 import Player from "@/components/Player.vue";

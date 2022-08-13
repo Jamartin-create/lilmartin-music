@@ -50,6 +50,9 @@ export default {
   margin: 0;
   padding: 0;
   overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   table {
     width: 90%;
     .opera {

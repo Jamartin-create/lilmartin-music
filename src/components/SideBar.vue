@@ -1,142 +1,391 @@
 <template>
-  <div class="container">
-    <!-- 头像+昵称 -->
-    <div class="logo-wrapper">
-      <img :src="userinfo.avatar" alt="" />
-      <h1 class="nickname">{{ userinfo.nickName }}</h1>
-    </div>
-    <!-- 菜单容器 -->
-    <div class="menu-wrapper">
-      <h1 class="menu-title">MENU</h1>
-      <div class="menu-list">
-        <div
-          class="menu-node"
-          v-for="menuNode in menuList"
-          :key="menuNode.name"
-          @click="changePage(menuNode.name)"
-          :class="menuSelected === menuNode.name ? 'active' : ''"
-        >
-          <i class="iconfont" :class="menuNode.iconClassName"></i>
-          <div class="menu-name">{{ menuNode.name }}</div>
+  <div id="sidebar" :class="isClose ? 'close' : ''">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img
+            :src="
+              userProfile.avatarUrl
+                ? userProfile.avatarUrl
+                : defaultUserInfo.avatar
+            "
+            alt=""
+          />
+        </span>
+        <div class="text nickname-text">
+          <span class="nickname">{{
+            userProfile.nickname
+              ? userProfile.nickname
+              : defaultUserInfo.nickname
+          }}</span>
+          <span class="lastloginIP">
+            {{
+              userProfile.lastLoginIP
+                ? userProfile.lastLoginIP
+                : defaultUserInfo.ip
+            }}
+          </span>
         </div>
       </div>
-    </div>
-    <!-- 登录登出 -->
-    <div class="log-in-out">
-      <div
-        class="menu-node"
-        @click="changePage('login')"
-        :class="menuSelected === 'login' ? 'active' : ''"
-      >
-        <i class="iconfont icon-lil-login"></i>
-        <div class="menu-name">LogIn</div>
+      <i
+        class="toggle iconfont icon-left-arrow-key"
+        @click="isClose = !isClose"
+      ></i>
+    </header>
+    <div class="menu-bar">
+      <div class="menu">
+        <li class="search-box">
+          <i class="icon iconfont icon-search" @click="isClose = false"></i>
+          <input type="text" placeholder="搜索..." />
+        </li>
+        <ul class="menu-links">
+          <li
+            class="nav-link"
+            v-for="menu in menuList"
+            :key="menu.name"
+            @click="changePage(menu.name)"
+          >
+            <a
+              href="javascript:;"
+              :class="activeNav === menu.name ? 'active' : ''"
+            >
+              <i class="icon iconfont" :class="menu.iconClassName"></i>
+              <span class="text nav-text">{{ menu.label }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="bottom-content">
+        <li @click="logoutConfirm">
+          <a href="#" :class="activeNav === 'login' ? 'active' : ''">
+            <i class="icon iconfont icon-Logout"></i>
+            <span class="text nav-text">{{
+              isLoging() ? "登出" : "登录"
+            }}</span>
+          </a>
+        </li>
+        <li class="mode">
+          <div class="sun-moon">
+            <i class="icon iconfont icon-sun sun"></i>
+            <i class="icon iconfont icon-moon moon"></i>
+          </div>
+          <span class="mode-text text">{{
+            sysSetting.isLight ? "Light mode" : "Dark mode"
+          }}</span>
+          <div class="toggle-switch">
+            <span class="switch" @click="changeMode"></span>
+          </div>
+        </li>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import testAvatar from "@/assets/testimage/avatar.jpg";
+import { mapState } from "vuex";
+import { doLogout, isLoging } from "@/util/auth";
 export default {
   name: "side-bar",
   data() {
     return {
-      userinfo: {
-        avatar: testAvatar,
-        nickName: "LilMartin",
-      },
       menuList: [
         {
           name: "home",
-          label: "Home",
-          iconClassName: "icon-lil-home",
+          label: "首页",
+          iconClassName: "icon-home1",
         },
         {
           name: "setting",
-          label: "Setting",
-          iconClassName: "icon-lil-setting",
+          label: "设置",
+          iconClassName: "icon-setting",
         },
       ],
+      isClose: false,
+      defaultUserInfo: {
+        avatar:
+          "http://cdn.jamartin.top/uploads/big/cbce862f0fcd8405ecf285e16674c8e6.png",
+        nickname: "音乐发烧友",
+        ip: "请登录哦",
+      },
+      activeNav: this.menuSelected,
     };
   },
   computed: {
+    ...mapState({
+      userProfile: (state) => state.user.data.profile,
+      sysSetting: (state) => state.sys.data,
+    }),
     menuSelected() {
-      return this.$route.name;
+      return this.$route.name ? this.$route.name : "home";
     },
   },
+  mounted() {
+    this.changePage(this.menuSelected);
+  },
+  created() {},
   methods: {
     changePage(name) {
+      this.activeNav = name;
       this.$router.push({ name });
+    },
+    changeMode() {
+      this.$store.dispatch("sys/changeMode");
+    },
+    logoutConfirm() {
+      if (isLoging() && window.confirm("确认退出吗")) {
+        doLogout();
+        this.changePage("login");
+      }
+    },
+    isLoging() {
+      return isLoging();
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.container {
+#sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
-  width: 17vw;
-  border-right: 1px solid rgba(216, 216, 216, 0.3);
-  color: #9bb3ca;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  .logo-wrapper {
-    width: 100%;
-    height: 120px;
+  width: 250px;
+  padding: 10px 14px;
+  background-color: var(--sidebar-color);
+  transition: var(--tran-03);
+  z-index: 100;
+  //所有的li标签
+  li {
+    height: 50px;
+    list-style: none;
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
-    > img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 2px solid rgba(216, 216, 216, 0.6);
-    }
-    .nickname {
-      color: #797979;
-      font-size: 24px;
-    }
+    margin-top: 10px;
   }
-  //菜单选项
-  .menu-node {
+
+  .icon,
+  .text {
+    color: var(--text-color);
+    transition: var(--tran-03);
+  }
+
+  .icon {
+    min-width: 60px;
+    border-radius: 6px;
+    height: 100%;
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
+    font-size: 20px;
+  }
 
+  .text {
+    font-size: 17px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 1;
+  }
+
+  header {
+    position: relative;
+    .image-text {
+      display: flex;
+      align-items: center;
+      .image {
+        min-width: 60px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 40px;
+          border-radius: 50%;
+        }
+      }
+      .nickname-text {
+        display: flex;
+        flex-direction: column;
+        .nickname {
+          margin-top: 2px;
+          font-size: 18px;
+          font-weight: 600;
+        }
+        .lastloginIP {
+          font-size: 16px;
+          margin-top: -2px;
+          display: block;
+        }
+      }
+    }
+    .toggle {
+      position: absolute;
+      top: 50%;
+      right: -26px;
+      background-color: var(--primary-color);
+      color: var(--sidebar-color);
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 12px;
+      cursor: pointer;
+      transform: translateY(-50%) rotate(0deg);
+      transition: var(--tran-03);
+    }
+  }
+  li a {
+    height: 100%;
     width: 100%;
-    box-sizing: border-box;
-    border-right: 8px solid transparent;
-    height: 40px;
-    line-height: 40px;
-    i {
-      font-size: 26px;
-      width: 40px;
-    }
-    .menu-name {
-      font-size: 22px;
-      font-weight: bold;
-      width: 150px;
-    }
-  }
-  .active {
-    box-sizing: border-box;
-    color: #fa7c05;
-    border-right: 8px solid #fa7c05;
-  }
-  //菜单列表容器
-  .menu-wrapper {
-    .menu-title {
-      margin: 10% 0;
-      padding-left: 34px;
-      font-size: 24px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    transition: var(--tran-03);
+    &:hover,
+    &.active {
+      background-color: var(--primary-color);
+      .text,
+      .icon {
+        color: var(--primary-color-light);
+      }
     }
   }
-  .log-in-out {
-    position: absolute;
-    width: 100%;
-    bottom: 30px;
+
+  .menu-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 55px);
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .menu {
+      margin-top: 40px;
+      .search-box {
+        background-color: var(--primary-color-light);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: var(--tran-03);
+        input {
+          outline: none;
+          border: none;
+          height: 100%;
+          width: 100%;
+
+          background-color: var(--primary-color-light);
+          color: var(--text-color);
+          border-radius: 6px;
+          font-size: 17px;
+          font-weight: 500;
+          transition: var(--tran-03);
+        }
+      }
+    }
+    .bottom-content {
+      .mode {
+        background-color: var(--primary-color-light);
+        transition-timing-function: var(--tran-03);
+        position: relative;
+        border-radius: 6px;
+        .sun-moon {
+          height: 50px;
+          width: 60px;
+          i {
+            position: absolute;
+            &.sun {
+              opacity: 0;
+            }
+          }
+        }
+        .toggle-switch {
+          position: absolute;
+          right: 0;
+          height: 100%;
+          min-width: 60px;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          .switch {
+            position: relative;
+            height: 22px;
+            width: 40px;
+            border-radius: 25px;
+            background-color: var(--toggle-color);
+            transition: var(--tran-03);
+            &::before {
+              content: "";
+              position: absolute;
+              width: 15px;
+              height: 15px;
+              top: 50%;
+              left: 5px;
+              background-color: var(--sidebar-color);
+              border-radius: 50%;
+              transform: translateY(-50%);
+              transition: var(--tran-03);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#sidebar.close {
+  width: 88px;
+  .text {
+    opacity: 0;
+  }
+  header {
+    .toggle {
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
+}
+
+body.dark {
+  #sidebar {
+    header {
+      .toggle {
+        color: var(--text-color);
+      }
+    }
+    li {
+      a:hover {
+        .icon,
+        .text {
+          color: var(--text-color);
+        }
+      }
+    }
+    .menu-bar {
+      .bottom-content {
+        .mode {
+          .sun-moon {
+            i {
+              &.sun {
+                opacity: 1;
+              }
+              &.moon {
+                opacity: 0;
+              }
+            }
+          }
+        }
+        .toggle-switch {
+          .switch {
+            &::before {
+              left: 20px;
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>

@@ -55,7 +55,7 @@ export default {
           QRCode.toString(
             `https://music.163.com/login?codekey=${this.qrCodeKey}`,
             {
-              width: 220,
+              width: 180,
               margin: 0,
               color: {
                 dark: "#335eea",
@@ -108,7 +108,7 @@ export default {
         this.updateUserLoginMode("account");
         this.fetchUserAccount().then(() => {
           this.fetchUserPlayList().then(() => {
-            this.$router.push({ path: "/mine" });
+            this.$router.push({ path: "/" });
           });
         });
       } else {
