@@ -79,6 +79,10 @@ tt {
     font-family: "Courier New", Courier, monospace;
 }
 
+th{
+    text-align: left;
+}
+
 /*统一等宽字代替*/
 small {
     font-size: 12px;

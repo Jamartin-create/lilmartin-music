@@ -17,4 +17,9 @@ export default [
     name: "setting",
     component: () => import("@/view/Setting.vue"),
   },
+  {
+    path: "/search",
+    name: "search",
+    component: () => import("@/view/Search.vue"),
+  },
 ];

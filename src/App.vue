@@ -5,6 +5,7 @@
       <router-view></router-view>
     </main>
     <!-- <player></player> -->
+    <pannel></pannel>
   </div>
 </template>
 
@@ -25,6 +26,7 @@ export default {
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  font-size: 18px;
 }
 </style>
 
@@ -32,17 +34,29 @@ export default {
 main {
   position: absolute;
   top: 0;
-  left: 250px;
-  height: 100vh;
-  width: calc(100% - 250px);
+  left: var(--sidebar-width);
+  height: calc(100% - var(--player-height));
+  width: calc(100% - var(--sidebar-width) - var(--pannel-width));
   transition: var(--tran-03);
 
   padding: 10px 14px;
 }
 #sidebar.close ~ main {
-  left: 88px;
-  height: 100vh;
-  width: calc(100% - 88px);
+  left: var(--sidebar-close-width);
+  width: calc(100% - var(--sidebar-close-width) - var(--pannel-width));
   transition: var(--tran-03);
+}
+@media (max-width: 1200px) {
+  #pannel {
+    display: none;
+  }
+  main {
+    width: calc(100% - var(--sidebar-width));
+    transition: var(--tran-03);
+  }
+  #sidebar.close ~ main {
+    width: calc(100% - var(--sidebar-close-width));
+    transition: var(--tran-03);
+  }
 }
 </style>

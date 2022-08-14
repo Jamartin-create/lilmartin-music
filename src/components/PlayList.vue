@@ -1,26 +1,28 @@
 <template>
-  <div class="container">
+  <div id="play-list">
     <table>
       <thead>
         <tr>
-          <th class="opera">操作</th>
-          <th class="name">歌名</th>
-          <th class="artist">歌手</th>
-          <th class="album">专辑</th>
-          <th class="time">时间</th>
+          <th class="thead"></th>
+          <th class="thead"></th>
+          <th class="thead">歌名</th>
+          <th class="thead">歌手</th>
+          <th class="thead">专辑</th>
+          <th class="thead">时间</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="item in playList"
+          v-for="(item, index) in playList"
           :key="item.id"
           @dblclick="openPlayer(item.id)"
         >
-          <td class="opera">♥</td>
-          <td class="name">{{ item.name }}</td>
-          <td class="artist">{{ item.artists[0].name }}</td>
-          <td class="album">{{ item.album.name }}</td>
-          <td class="time">{{ item.duration | formatTime }}</td>
+          <td>{{ (index >= 9 ? "" : "0") + (index + 1) }}</td>
+          <td></td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.artists[0].name }}</td>
+          <td>{{ item.album.name }}</td>
+          <td>{{ item.duration | formatTime }}</td>
         </tr>
       </tbody>
     </table>
@@ -44,46 +46,72 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.container {
+#play-list {
+  margin-top: 3%;
   width: 100%;
-  height: 90vh;
-  margin: 0;
-  padding: 0;
-  overflow: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
   table {
-    width: 90%;
-    .opera {
-      width: 5%;
+    width: 100%;
+    thead {
+      tr {
+        th {
+          font-size: 18px;
+          font-weight: lighter;
+          color: #a0a0a0;
+        }
+        .thead:nth-child(1),
+        .thead:nth-child(2) {
+          width: 5%;
+        }
+
+        .thead:nth-child(3),
+        .thead:nth-child(5) {
+          width: 29%;
+        }
+        .thead:nth-child(4) {
+          width: 25%;
+        }
+        .thead:nth-child(6) {
+          width: 8%;
+        }
+      }
     }
-    .name {
-      width: 30%;
+    tbody {
+      tr {
+        &:hover {
+          background-color: var(--primary-color);
+          color: var(--primary-color-light);
+          cursor: pointer;
+        }
+        td {
+          font-size: 20px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          line-height: 50px;
+          height: 50px;
+          &:nth-child(1) {
+            text-align: center;
+          }
+          &:nth-child(3),
+          &:nth-child(4),
+          &:nth-child(5) {
+            padding-right: 2%;
+          }
+        }
+      }
     }
-    .artist {
-      width: 30%;
-    }
-    .album {
-      width: 30%;
-    }
-    .time {
-      width: 5%;
-    }
-    tr {
-      height: 4%;
-    }
-    tr:hover {
-      background-color: rgb(177, 177, 177);
-    }
-    th,
-    td {
-      text-align: left;
-      font-size: 20px;
-    }
-    th:first-child,
-    td:first-child {
-      text-align: center;
+  }
+}
+body.dark {
+  #play-list {
+    table {
+      tbody {
+        tr {
+          &:hover {
+            color: var(--text-color);
+          }
+        }
+      }
     }
   }
 }

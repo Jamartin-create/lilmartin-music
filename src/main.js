@@ -6,15 +6,15 @@ import "@/util/filter";
 import "nprogress/nprogress.css";
 import "@/assets/css/iconfont/iconfont";
 import "@/assets/css/iconfont/iconfont.css";
-import "@/assets/css/sidebaricon/iconfont";
-import "@/assets/css/sidebaricon/iconfont.css";
 
 import Sider from "@/components/SideBar.vue";
 import Player from "@/components/Player.vue";
+import Pannel from "@/components/Pannel.vue";
 
 Vue.config.productionTip = false;
 Vue.component(Sider.name, Sider);
 Vue.component(Player.name, Player);
+Vue.component(Pannel.name, Pannel);
 
 new Vue({
   router,
