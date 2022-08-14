@@ -35,8 +35,14 @@
     <div class="menu-bar">
       <div class="menu">
         <li class="search-box">
-          <i class="icon iconfont icon-search" @click="isClose = false"></i>
-          <input type="text" placeholder="搜索..." />
+          <i
+            class="icon iconfont icon-search"
+            @click="
+              isClose = false;
+              changePage('search');
+            "
+          ></i>
+          <input v-model="searchKeywords" type="text" placeholder="搜索..." />
         </li>
         <ul class="menu-links">
           <li
@@ -108,6 +114,7 @@ export default {
         ip: "请登录哦",
       },
       activeNav: this.menuSelected,
+      searchKeywords: "",
     };
   },
   computed: {
@@ -126,6 +133,13 @@ export default {
   methods: {
     changePage(name) {
       this.activeNav = name;
+      if (name === "search") {
+        if (this.searchKeywords === "") {
+          return;
+        }
+        this.$router.push({ name, query: { keywords: this.searchKeywords } });
+        return;
+      }
       this.$router.push({ name });
     },
     changeMode() {
@@ -356,10 +370,13 @@ body.dark {
       }
     }
     li {
-      a:hover {
-        .icon,
-        .text {
-          color: var(--text-color);
+      a {
+        &:hover,
+        &.active {
+          .icon,
+          .text {
+            color: var(--text-color);
+          }
         }
       }
     }
