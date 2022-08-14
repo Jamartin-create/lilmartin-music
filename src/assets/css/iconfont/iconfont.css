@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3543610 */
-  src: url('iconfont.woff2?t=1658670528979') format('woff2'),
-       url('iconfont.woff?t=1658670528979') format('woff'),
-       url('iconfont.ttf?t=1658670528979') format('truetype');
+  src: url('iconfont.woff2?t=1660472062464') format('woff2'),
+       url('iconfont.woff?t=1660472062464') format('woff'),
+       url('iconfont.ttf?t=1660472062464') format('truetype');
 }
 
 .iconfont {
@@ -13,39 +13,55 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-home:before {
+  content: "\e6d7";
+}
+
+.icon-setting:before {
+  content: "\e63f";
+}
+
+.icon-library:before {
+  content: "\e696";
+}
+
+.icon-twitter-circle-fill:before {
+  content: "\e88a";
+}
+
+.icon-home1:before {
+  content: "\e674";
+}
+
+.icon-left-arrow-key:before {
+  content: "\e600";
+}
+
+.icon-search:before {
+  content: "\e82e";
+}
+
+.icon-Logout:before {
+  content: "\e61f";
+}
+
+.icon-sun:before {
+  content: "\e61d";
+}
+
+.icon-moon:before {
+  content: "\e65c";
+}
+
+.icon-love:before {
+  content: "\e60d";
+}
+
+.icon-love-fill:before {
+  content: "\e60e";
+}
+
 .icon-lil-netease:before {
   content: "\e97e";
-}
-
-.icon-lil-setting-active:before {
-  content: "\e751";
-}
-
-.icon-lil-login-active-copy:before {
-  content: "\e752";
-}
-
-.icon-lil-logout:before {
-  content: "\e753";
-}
-
-.icon-lil-logout-active-copy:before {
-  content: "\e754";
-}
-
-.icon-lil-home:before {
-  content: "\e6bb";
-}
-
-.icon-lil-setting:before {
-  content: "\e68b";
-}
-
-.icon-lil-login:before {
-  content: "\e74f";
-}
-
-.icon-homefill-active:before {
-  content: "\e750";
 }
 
