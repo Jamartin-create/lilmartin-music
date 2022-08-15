@@ -4,7 +4,7 @@
     <main>
       <router-view></router-view>
     </main>
-    <!-- <player></player> -->
+    <player></player>
     <pannel></pannel>
   </div>
 </template>
@@ -38,14 +38,21 @@ main {
   height: calc(100% - var(--player-height));
   width: calc(100% - var(--sidebar-width) - var(--pannel-width));
   transition: var(--tran-03);
-
   padding: 10px 14px;
 }
+
 #sidebar.close ~ main {
   left: var(--sidebar-close-width);
   width: calc(100% - var(--sidebar-close-width) - var(--pannel-width));
   transition: var(--tran-03);
 }
+
+#sidebar.close ~ #player {
+  left: var(--sidebar-close-width);
+  width: calc(100% - var(--sidebar-close-width));
+  transition: var(--tran-03);
+}
+
 @media (max-width: 1200px) {
   #pannel {
     display: none;

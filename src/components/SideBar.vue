@@ -20,8 +20,8 @@
           }}</span>
           <span class="lastloginIP">
             {{
-              userProfile.lastLoginIP
-                ? userProfile.lastLoginIP
+              userProfile.provinceLabel
+                ? userProfile.provinceLabel
                 : defaultUserInfo.ip
             }}
           </span>

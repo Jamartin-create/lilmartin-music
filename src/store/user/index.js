@@ -5,6 +5,7 @@ import { isLoging, isAccountLogin } from "@/util/auth";
 import { getUserAccount, getUserPlayList } from "@/api/user";
 import updataApp from "@/util/updataApp";
 import mylocalStorage from "./userInitLocalStorage";
+import provinces from "./provinces";
 
 if (localStorage.getItem("data") === null) {
   localStorage.setItem("data", JSON.stringify(mylocalStorage.data));
@@ -30,7 +31,20 @@ const actions = {
     if (!isLoging()) return;
     const result = await getUserAccount();
     if (result.code === 200) {
-      commit("UPDATE_USER_PROFILE", result.profile);
+      const provinceInfo = {
+        provinceName: "未知",
+        provinceLabel: "Unknow",
+      };
+      provinces.province.forEach((item) => {
+        if (item.code === result.profile.province) {
+          provinceInfo.provinceName = item.name;
+          provinceInfo.provinceLabel = item.label;
+        }
+      });
+      commit("UPDATE_USER_PROFILE", {
+        ...result.profile,
+        ...provinceInfo,
+      });
     }
   },
   /**

@@ -10,7 +10,6 @@ export function setCookies(string) {
   const cookies = string.split("; HTTPOnly;");
   cookies.map((cookie) => {
     document.cookie = cookie;
-    console.log(cookie);
     const cookieKeyValue = cookie.split(";")[0].split("=");
     localStorage.setItem(`cookie-${cookieKeyValue[0]}`, cookieKeyValue[1]);
   });

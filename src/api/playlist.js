@@ -21,3 +21,14 @@ export const getSonsUrl = (params) => {
     },
   });
 };
+
+export const getSongDetailById = (params) => {
+  return request({
+    method: "get",
+    url: "/song/detail",
+    params: {
+      ...params,
+      timestamp: new Date().getTime(),
+    },
+  });
+};

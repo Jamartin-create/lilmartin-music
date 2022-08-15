@@ -11,11 +11,13 @@
           v-for="mode in searchType"
           :class="searched === mode.id ? 'active' : ''"
           :key="mode.id"
+          @click="searched = mode.id"
         >
           {{ mode.label }}
         </span>
       </div>
       <PlayList v-if="searched === 0" :playList="playList" />
+      <AlbumList v-if="searched === 1" />
     </div>
   </div>
 </template>
@@ -23,9 +25,10 @@
 <script>
 import { searchByKeywords, getSonsUrl } from "@/api/playlist";
 import PlayList from "@/components/PlayList.vue";
+import AlbumList from "@/components/AlbumList.vue";
 
 export default {
-  components: { PlayList },
+  components: { PlayList, AlbumList },
   data() {
     return {
       keywords: "",
@@ -92,6 +95,7 @@ export default {
       .bar {
         font-size: 22px;
         font-weight: bold;
+        cursor: pointer;
       }
       .bar.active {
         border-bottom: 2px solid black;
