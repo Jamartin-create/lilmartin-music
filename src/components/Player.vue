@@ -106,17 +106,8 @@ export default {
         console.log("开始");
       });
       document.getElementById("audio").addEventListener("ended", () => {
-        console.log("end");
-        if (this.selectCircleMode === 0) {
-          let index = Math.floor(Math.random() * (this.playList.length + 1));
-          this.setMusicSrc({
-            songsId: this.playList[index],
-            index,
-          });
-        } else if (this.selectCircleMode === 1) return;
-        else {
-          this.nextMusic();
-        }
+        if (this.selectCircleMode === 1) this.play(this.curSongs.index);
+        else this.nextMusic();
       });
     },
     //控制暂停、播放
@@ -126,18 +117,49 @@ export default {
     },
     //下一首
     nextMusic() {
-      if (this.playList.length & (this.playList.length < 1)) return;
-      let index = (this.curSongs.index + 1) % this.playList.length;
-      this.setMusicSrc({
-        songsId: this.playList[index],
-        index,
-      });
+      let index = this.curSongs.index;
+      if (this.playList.length & (this.playList.length < 1)) {
+        this.play(index);
+        return;
+      }
+      if (this.selectCircleMode === 2 || this.selectCircleMode === 1) {
+        index = this.normalCircleR();
+      } else if (this.selectCircleMode === 0) {
+        index = this.randomCircle();
+      }
+      this.play(index);
     },
     //上一首
     lastMusic() {
-      if (this.playList.length & (this.playList.length < 1)) return;
-      let index =
-        (this.curSongs.index - 1 + this.playList.length) % this.playList.length;
+      let index = this.curSongs.index;
+      if (this.playList.length & (this.playList.length < 1)) {
+        this.play(index);
+        return;
+      }
+      if (this.selectCircleMode === 2 || this.selectCircleMode === 1) {
+        index = this.normalCircleL();
+      } else if (this.selectCircleMode === 0) {
+        index = this.randomCircle();
+      }
+
+      this.play(index);
+    },
+    //普通正向循环播放
+    normalCircleR() {
+      return (this.curSongs.index + 1) % this.playList.length;
+    },
+    //普通逆向循环播放
+    normalCircleL() {
+      return (
+        (this.curSongs.index - 1 + this.playList.length) % this.playList.length
+      );
+    },
+    //随机播放
+    randomCircle() {
+      return Math.floor(Math.random() * (this.playList.length + 1));
+    },
+    //根据index播放音乐
+    play(index) {
       this.setMusicSrc({
         songsId: this.playList[index],
         index,
@@ -162,6 +184,7 @@ export default {
       document.querySelector("audio").load();
       this.isPlaying = true;
     },
+    //设置音乐播放源并重新加载
     async setMusicSrc(data) {
       this.pauseMusic();
       this.clearMusicProcess();
