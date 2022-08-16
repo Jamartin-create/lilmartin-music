@@ -15,7 +15,7 @@
         <tr
           v-for="(item, index) in playList"
           :key="item.id"
-          @dblclick="openPlayer(item.id)"
+          @dblclick="openPlayer(item.id, index)"
         >
           <td>{{ (index >= 9 ? "" : "0") + (index + 1) }}</td>
           <td></td>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "play-list",
   props: ["playList"],
@@ -38,8 +39,10 @@ export default {
   },
   computed: {},
   methods: {
-    openPlayer(songsId) {
-      this.$bus.$emit("changeMusic", songsId);
+    ...mapActions("playList", ["changePlayList"]),
+    openPlayer(songsId, index) {
+      this.changePlayList(this.playList);
+      this.$bus.$emit("changeMusic", { songsId, index });
     },
   },
 };

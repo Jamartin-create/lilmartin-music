@@ -11,7 +11,6 @@ export default (store) => {
     ) {
       localStorage.setItem("data", JSON.stringify(state.user.data));
     } else if (["playList/CHANGE_CUR_SONGS"].includes(mutations.type)) {
-      console.log(state.playList);
       localStorage.setItem("playList", JSON.stringify(state.playList));
     }
   });

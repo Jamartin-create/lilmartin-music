@@ -3,24 +3,30 @@
     <div class="player-wrapper">
       <div class="songs-info">
         <div class="image">
-          <img :src="curSongs.pic" alt="" />
+          <img :src="curSongs.pic ? curSongs.pic : ''" alt="" />
         </div>
         <div class="text-info">
-          <span class="songstitle">{{ curSongs.title }}</span>
+          <span class="songstitle">{{
+            curSongs.title ? curSongs.title : "当前未播放音乐"
+          }}</span>
           <span class="singers">{{ artist }}</span>
         </div>
       </div>
       <div class="player-ctl">
         <!-- 控制暂停、播放 -->
         <div class="play-pause">
-          <i class="icon iconfont icon-suijibofang"></i>
-          <i class="icon iconfont icon-next"></i>
+          <i
+            class="icon iconfont"
+            :class="`icon-${circleMode[selectCircleMode].icon}`"
+            @click="changeCircleMode"
+          ></i>
+          <i class="icon iconfont icon-next" @click="lastMusic"></i>
           <i
             class="icon iconfont"
             :class="isPlaying ? ' icon-pause' : 'icon-play'"
             @click="control()"
           ></i>
-          <i class="icon iconfont icon-next"></i>
+          <i class="icon iconfont icon-next" @click="nextMusic"></i>
           <i class="icon"></i>
         </div>
         <!-- 控制音乐进度 -->
@@ -47,50 +53,120 @@ export default {
   data() {
     return {
       isPlaying: false,
+      selectCircleMode: 2,
+      circleMode: [
+        {
+          id: 0,
+          icon: "suijibofang",
+          type: "random",
+        },
+        {
+          id: 1,
+          icon: "danquxunhuan",
+          type: "single",
+        },
+        {
+          id: 2,
+          icon: "bofang-xunhuanbofang",
+          type: "circle",
+        },
+      ],
     };
   },
+  watched: {},
   computed: {
     ...mapState({
       playList: (state) => state.playList.playList,
       curSongs: (state) => state.playList.curSongs,
     }),
     musicSrc() {
-      return this.curSongs.url;
+      return this.curSongs.url ? this.curSongs.url : "";
     },
     artist() {
       return this.curSongs.singer
         ? this.curSongs.singer.map((item) => item.name).join("/")
-        : "";
+        : "未知";
     },
   },
   mounted() {
     this.$bus.$on("changeMusic", this.setMusicSrc);
-    this.$bus.$on("pause", () => {
-      if (this.isPlaying) this.pauseMusic();
-      else this.playMusic();
-    });
+    this.$bus.$on("pause", this.control());
+    this.$nextTick(this.listenProcess());
   },
   methods: {
     ...mapActions("playList", ["changeCurSongs"]),
-    control() {
-      this.$bus.$emit("pause");
+    //切换循环模式
+    changeCircleMode() {
+      this.selectCircleMode =
+        (this.selectCircleMode + 1) % this.circleMode.length;
     },
+    //监听音乐进度
+    listenProcess() {
+      document.getElementById("audio").addEventListener("play", () => {
+        console.log("开始");
+      });
+      document.getElementById("audio").addEventListener("ended", () => {
+        console.log("end");
+        if (this.selectCircleMode === 0) {
+          let index = Math.floor(Math.random() * (this.playList.length + 1));
+          this.setMusicSrc({
+            songsId: this.playList[index],
+            index,
+          });
+        } else if (this.selectCircleMode === 1) return;
+        else {
+          this.nextMusic();
+        }
+      });
+    },
+    //控制暂停、播放
+    control() {
+      if (this.isPlaying) this.pauseMusic();
+      else this.playMusic();
+    },
+    //下一首
+    nextMusic() {
+      if (this.playList.length & (this.playList.length < 1)) return;
+      let index = (this.curSongs.index + 1) % this.playList.length;
+      this.setMusicSrc({
+        songsId: this.playList[index],
+        index,
+      });
+    },
+    //上一首
+    lastMusic() {
+      if (this.playList.length & (this.playList.length < 1)) return;
+      let index =
+        (this.curSongs.index - 1 + this.playList.length) % this.playList.length;
+      this.setMusicSrc({
+        songsId: this.playList[index],
+        index,
+      });
+    },
+    //播放
     playMusic() {
       document.querySelector("audio").play();
       this.isPlaying = true;
     },
+    //暂停
     pauseMusic() {
       document.querySelector("audio").pause();
       this.isPlaying = false;
     },
-    refresh() {
-      this.pauseMusic();
+    //音乐进度清零
+    clearMusicProcess() {
+      document.querySelector("audio").currentTime = 0;
     },
-    async setMusicSrc(songId) {
-      this.refresh();
-      await this.changeCurSongs(songId);
-      this.playMusic();
+    //重新加载
+    loadMusicProcess() {
       document.querySelector("audio").load();
+      this.isPlaying = true;
+    },
+    async setMusicSrc(data) {
+      this.pauseMusic();
+      this.clearMusicProcess();
+      await this.changeCurSongs(data);
+      this.loadMusicProcess();
     },
     //监听鼠标拖拽进度条
     draggerEventInit() {
@@ -129,9 +205,8 @@ export default {
     align-items: center;
     padding: 0 10px;
     .songs-info {
-      min-width: 150px;
+      min-width: 300px;
       display: flex;
-      justify-content: center;
       align-items: center;
       .image {
         img {
