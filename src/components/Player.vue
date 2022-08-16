@@ -15,7 +15,11 @@
         <div class="play-pause">
           <i class="icon iconfont icon-suijibofang"></i>
           <i class="icon iconfont icon-next"></i>
-          <i class="icon iconfont icon-pause"></i>
+          <i
+            class="icon iconfont"
+            :class="isPlaying ? ' icon-pause' : 'icon-play'"
+            @click="control()"
+          ></i>
           <i class="icon iconfont icon-next"></i>
           <i class="icon"></i>
         </div>
@@ -41,7 +45,9 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "player",
   data() {
-    return {};
+    return {
+      isPlaying: false,
+    };
   },
   computed: {
     ...mapState({
@@ -52,20 +58,30 @@ export default {
       return this.curSongs.url;
     },
     artist() {
-      return this.curSongs.singer.map((item) => item.name).join("/");
+      return this.curSongs.singer
+        ? this.curSongs.singer.map((item) => item.name).join("/")
+        : "";
     },
   },
   mounted() {
     this.$bus.$on("changeMusic", this.setMusicSrc);
-    // this.draggerEventInit();
+    this.$bus.$on("pause", () => {
+      if (this.isPlaying) this.pauseMusic();
+      else this.playMusic();
+    });
   },
   methods: {
     ...mapActions("playList", ["changeCurSongs"]),
+    control() {
+      this.$bus.$emit("pause");
+    },
     playMusic() {
       document.querySelector("audio").play();
+      this.isPlaying = true;
     },
     pauseMusic() {
       document.querySelector("audio").pause();
+      this.isPlaying = false;
     },
     refresh() {
       this.pauseMusic();
