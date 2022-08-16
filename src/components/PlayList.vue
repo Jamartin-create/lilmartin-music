@@ -38,6 +38,7 @@ export default {
     return {};
   },
   computed: {},
+  mounted() {},
   methods: {
     ...mapActions("playList", ["changePlayList"]),
     openPlayer(songsId, index) {

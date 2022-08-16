@@ -138,6 +138,7 @@ export default {
           return;
         }
         this.$router.push({ name, query: { keywords: this.searchKeywords } });
+        this.$bus.$emit("research", this.searchKeywords);
         return;
       }
       this.$router.push({ name });

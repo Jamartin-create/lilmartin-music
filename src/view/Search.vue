@@ -49,6 +49,10 @@ export default {
     };
   },
   mounted() {
+    this.$bus.$on("research", async (keywords) => {
+      this.keywords = keywords;
+      this.searchByKeys();
+    });
     this.keywords = this.$route.query.keywords;
     this.searchByKeys();
   },
@@ -60,7 +64,6 @@ export default {
         offset: 1,
       });
       this.playList = res.result.songs;
-      console.log(this.playList);
     },
   },
 };
