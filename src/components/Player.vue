@@ -31,14 +31,20 @@
         </div>
         <!-- 控制音乐进度 -->
         <div class="process-ctl" ref="process">
-          <div id="drager" ref="drager"></div>
+          <div class="process-bar">
+            <div class="passed-process" ref="passedProcess">
+              <div id="drager" ref="drager"></div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="other-ctl">
-        <i class="icon iconfont icon-volume"></i>
+        <div id="volume-ctl">
+          <i class="icon iconfont icon-volume volume"></i>
+        </div>
       </div>
     </div>
-    <audio id="audio" autoplay buffered ref="audio">
+    <audio id="audio" buffered ref="audio">
       <source :src="musicSrc" type="audio/mpeg" />
       Your browser does not support this audio format.
     </audio>
@@ -71,6 +77,9 @@ export default {
           type: "circle",
         },
       ],
+      isMouseDown: false,
+      curDuration: 0,
+      durationInterval: "",
     };
   },
   watched: {},
@@ -87,14 +96,57 @@ export default {
         ? this.curSongs.singer.map((item) => item.name).join("/")
         : "未知";
     },
+    processScale() {
+      return 580000 / this.curSongs.duration;
+    },
   },
+  watched: {},
   mounted() {
     this.$bus.$on("changeMusic", this.setMusicSrc);
-    this.$bus.$on("pause", this.control());
-    this.$nextTick(this.listenProcess());
+    this.$bus.$on("pause", this.control);
+    this.$nextTick(this.listenProcess);
+    this.draggerEventInit();
   },
   methods: {
     ...mapActions("playList", ["changeCurSongs"]),
+    //监听鼠标拖拽进度条
+    draggerEventInit() {
+      const process = this.$refs.process;
+      const passedProcess = this.$refs.passedProcess;
+      const dragger = this.$refs.drager;
+      const audio = document.getElementById("audio");
+      this.durationInterval = setInterval(() => {
+        this.curDuration = audio.currentTime * this.processScale;
+        passedProcess.style.width = this.curDuration + "px";
+        dragger.style.left = this.curDuration + "px";
+      }, 10);
+
+      process.onmousedown = (event) => {
+        //计算已走过的长度
+        let passedWidth =
+          process.getBoundingClientRect().width -
+          Math.abs(process.getBoundingClientRect().width - event.offsetX);
+        if (passedWidth < 0) audio.currentTime = 0;
+        else if (passedWidth >= process.getBoundingClientRect().width)
+          audio.currentTime = process.getBoundingClientRect().width;
+        audio.currentTime = passedWidth / this.processScale;
+      };
+      // dragger.onmousedown = (event) => {
+      //   this.isMouseDown = true;
+      // };
+      // window.onmouseup = (event) => {
+      //   this.isMouseDown = false;
+      //   console.log(event);
+      // };
+      // window.onmousemove = (event) => {
+      //   if (!this.isMouseDown) return;
+      //   console.log(window);
+      //   console.log("move");
+      //   console.log(dragger.style.left);
+      // };
+    },
+    //绑定进度拖拽按钮监听
+    addDragger() {},
     //切换循环模式
     changeCircleMode() {
       this.selectCircleMode =
@@ -190,14 +242,7 @@ export default {
       this.clearMusicProcess();
       await this.changeCurSongs(data);
       this.loadMusicProcess();
-    },
-    //监听鼠标拖拽进度条
-    draggerEventInit() {
-      const process = this.$refs.process;
-      const dragger = this.$refs.drager;
-      dragger.onmousedown = (event) => {
-        console.log(event);
-      };
+      this.playMusic();
     },
   },
   //解绑某事件
@@ -291,38 +336,85 @@ export default {
       .process-ctl {
         width: calc(100% - 20px);
         min-width: 300px;
-        height: 2px;
-        background-color: var(--primary-color);
-        opacity: 0.3;
-        position: relative;
-        #drager {
-          position: absolute;
-          left: 0;
-          top: 50%;
-          transform: translateY(-50%) translateX(-50%);
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        background-color: var(--player-color);
+        .process-bar {
+          border: 20px;
+          height: 2px;
+          width: 100%;
+          border: 10px;
           background-color: var(--primary-color);
+          opacity: 0.3;
           &:hover {
+            height: 5px;
+            border-radius: 6px;
+          }
+          .passed-process {
+            position: relative;
+            width: 0px;
+            height: 110%;
+            background-color: rgb(207, 123, 123);
+            #drager {
+              position: absolute;
+              left: 0;
+              top: 50%;
+              transform: translateY(-50%) translateX(-50%);
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              background-color: var(--primary-color);
+            }
+          }
+          &:hover .passed-process #drager,
+          #drager:hover {
             box-shadow: 0 0 5px #333;
-            width: 12px;
-            height: 12px;
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+            user-select: none;
           }
         }
       }
     }
     .other-ctl {
       width: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      height: 100%;
+      position: relative;
       .icon {
         width: 30px;
         height: 30px;
         line-height: 30px;
         text-align: center;
         font-size: 20px;
+      }
+      #volume-ctl {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        text-align: center;
+        background-color: aliceblue;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        transition: var(--tran-03);
+        i.volume {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translateY(-50%) translateX(-50%);
+        }
+        &:hover {
+          height: 100px;
+          border-radius: 15px;
+          transform: translateY(-65%) translateX(-50%);
+          i.volume {
+            bottom: 0;
+          }
+        }
       }
     }
   }
@@ -336,9 +428,11 @@ body.dark {
           color: var(--text-color);
         }
         .process-ctl {
-          background-color: var(--text-color);
-          #drager {
+          .process-bar {
             background-color: var(--text-color);
+            #drager {
+              background-color: var(--text-color);
+            }
           }
         }
       }

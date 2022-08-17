@@ -10,7 +10,9 @@ export default (store) => {
       ].includes(mutations.type)
     ) {
       localStorage.setItem("data", JSON.stringify(state.user.data));
-    } else if (["playList/CHANGE_CUR_SONGS"].includes(mutations.type)) {
+    } else if (
+      ["playList/CHANGE_CUR_SONGS", "CHANGE_PLAY_LIST"].includes(mutations.type)
+    ) {
       localStorage.setItem("playList", JSON.stringify(state.playList));
     }
   });

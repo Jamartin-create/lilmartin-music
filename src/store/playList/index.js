@@ -16,6 +16,7 @@ const actions = {
     const res = await getSongDetailById({
       ids: songsId,
     });
+    console.log(res);
     if (res.code === 200) {
       const { songs } = res;
       const songsInfo = {
@@ -26,6 +27,7 @@ const actions = {
         alia: songs[0].alia,
         singer: songs[0].ar,
         url: `https://music.163.com/song/media/outer/url?id=${songsId}.mp3`,
+        duration: songs[0].dt,
       };
       commit("CHANGE_CUR_SONGS", songsInfo);
     }
