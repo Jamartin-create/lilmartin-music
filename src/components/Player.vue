@@ -27,7 +27,7 @@
             @click="control()"
           ></i>
           <i class="icon iconfont icon-next" @click="nextMusic"></i>
-          <i class="icon"></i>
+          <i class="icon set-space"></i>
         </div>
         <!-- 控制音乐进度 -->
         <div class="process-ctl" ref="process">
@@ -58,6 +58,10 @@ export default {
   name: "player",
   data() {
     return {
+      audio: "",
+      process: "",
+      passedProcess: "",
+      dragger: "",
       isPlaying: false,
       selectCircleMode: 2,
       circleMode: [
@@ -77,7 +81,7 @@ export default {
           type: "circle",
         },
       ],
-      isMouseDown: false,
+      isDraging: false,
       curDuration: 0,
       durationInterval: "",
     };
@@ -111,42 +115,84 @@ export default {
     ...mapActions("playList", ["changeCurSongs"]),
     //监听鼠标拖拽进度条
     draggerEventInit() {
-      const process = this.$refs.process;
-      const passedProcess = this.$refs.passedProcess;
-      const dragger = this.$refs.drager;
-      const audio = document.getElementById("audio");
-      this.durationInterval = setInterval(() => {
-        this.curDuration = audio.currentTime * this.processScale;
-        passedProcess.style.width = this.curDuration + "px";
-        dragger.style.left = this.curDuration + "px";
-      }, 10);
-
-      process.onmousedown = (event) => {
-        //计算已走过的长度
-        let passedWidth =
-          process.getBoundingClientRect().width -
-          Math.abs(process.getBoundingClientRect().width - event.offsetX);
-        if (passedWidth < 0) audio.currentTime = 0;
-        else if (passedWidth >= process.getBoundingClientRect().width)
-          audio.currentTime = process.getBoundingClientRect().width;
-        audio.currentTime = passedWidth / this.processScale;
-      };
-      // dragger.onmousedown = (event) => {
-      //   this.isMouseDown = true;
-      // };
-      // window.onmouseup = (event) => {
-      //   this.isMouseDown = false;
-      //   console.log(event);
-      // };
-      // window.onmousemove = (event) => {
-      //   if (!this.isMouseDown) return;
-      //   console.log(window);
-      //   console.log("move");
-      //   console.log(dragger.style.left);
-      // };
+      //注册虚拟dom
+      this.audio = this.$refs.audio;
+      this.process = this.$refs.process;
+      this.passedProcess = this.$refs.passedProcess;
+      this.dragger = this.$refs.drager;
+      //定义监听
+      this.process.onmousedown = this.processMouseDown;
+      this.process.onmousemove = this.processMouseMove;
+      this.dragger.onmousedown = this.draggerMouseDown;
+      window.onmouseup = this.mouseUp;
+      window.onmousemove = this.mouseMove;
+    },
+    //鼠标抬起
+    mouseUp(event) {
+      if (!this.isDraging) return;
+      this.isDraging = false;
+      if (!this.audio.paused) this.setDurationInterval();
+      this.changeCurrentTime(this.computePassedLength(event));
     },
     //绑定进度拖拽按钮监听
-    addDragger() {},
+    draggerMouseDown() {
+      this.isDraging = true;
+      this.clearDurationInterval();
+    },
+    //计算dragger移动的路径
+    computePassedLength(event) {
+      let sideBarWidth = document
+        .getElementById("sidebar")
+        .getBoundingClientRect().width;
+      let processLength = this.process.getBoundingClientRect().width;
+      //计算已走过的长度
+      let passedWidth =
+        event.clientX - (sideBarWidth + this.process.offsetLeft);
+      if (passedWidth < 0) {
+        return 0;
+      } else if (passedWidth >= processLength) {
+        return processLength / this.processScale;
+      }
+      return Math.floor(passedWidth / this.processScale);
+    },
+    //鼠标在全局移动
+    mouseMove(event) {
+      if (!this.isDraging) return;
+      let passedTime = this.computePassedLength(event);
+      this.changeDraggerPosition(passedTime * this.processScale);
+    },
+    //鼠标在进度条上按下
+    processMouseDown(event) {
+      let passedTime = this.computePassedLength(event);
+      this.changeCurrentTime(passedTime);
+    },
+    //更新dragger和走过路径的位置
+    changeDraggerPosition(length) {
+      this.passedProcess.style.width = length + "px";
+      this.dragger.style.left = length + "px";
+    },
+    //设置定时器
+    setDurationInterval() {
+      this.durationInterval = setInterval(() => {
+        this.curDuration = this.getCurrentTime() * this.processScale;
+        this.changeDraggerPosition(this.curDuration);
+      }, 1000);
+    },
+    //清空定时器
+    clearDurationInterval() {
+      clearInterval(this.durationInterval);
+    },
+    //改变播放进度
+    changeCurrentTime(time) {
+      if (this.isDraging) {
+        return;
+      }
+      this.audio.currentTime = time;
+    },
+    //获取播放进度
+    getCurrentTime() {
+      return this.audio.currentTime;
+    },
     //切换循环模式
     changeCircleMode() {
       this.selectCircleMode =
@@ -164,8 +210,12 @@ export default {
     },
     //控制暂停、播放
     control() {
-      if (this.isPlaying) this.pauseMusic();
-      else this.playMusic();
+      this.isPlaying = this.audio.paused;
+      if (this.audio.paused) {
+        this.playMusic();
+      } else {
+        this.pauseMusic();
+      }
     },
     //下一首
     nextMusic() {
@@ -220,12 +270,12 @@ export default {
     //播放
     playMusic() {
       document.querySelector("audio").play();
-      this.isPlaying = true;
+      this.setDurationInterval();
     },
     //暂停
     pauseMusic() {
       document.querySelector("audio").pause();
-      this.isPlaying = false;
+      this.clearDurationInterval();
     },
     //音乐进度清零
     clearMusicProcess() {
@@ -318,7 +368,6 @@ export default {
           border-radius: 50%;
           cursor: pointer;
           &:nth-child(3) {
-            font-size: 30px;
             width: 40px;
             height: 40px;
             line-height: 40px;
