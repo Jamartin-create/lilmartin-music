@@ -39,8 +39,15 @@
         </div>
       </div>
       <div class="other-ctl">
-        <div id="volume-ctl">
-          <i class="icon iconfont icon-volume volume"></i>
+        <div class="volume">
+          <i class="icon iconfont icon-volume" id="volume-icon"></i>
+          <div id="volume-ctl" ref="volumeCtl">
+            <div id="volume-process" ref="volumeProcess">
+              <div id="volume-passed" ref="volumePassed">
+                <div id="volume-dragger" ref="volumeDragger"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -122,7 +129,6 @@ export default {
       this.dragger = this.$refs.drager;
       //定义监听
       this.process.onmousedown = this.processMouseDown;
-      this.process.onmousemove = this.processMouseMove;
       this.dragger.onmousedown = this.draggerMouseDown;
       window.onmouseup = this.mouseUp;
       window.onmousemove = this.mouseMove;
@@ -176,7 +182,7 @@ export default {
       this.durationInterval = setInterval(() => {
         this.curDuration = this.getCurrentTime() * this.processScale;
         this.changeDraggerPosition(this.curDuration);
-      }, 1000);
+      }, 10);
     },
     //清空定时器
     clearDurationInterval() {
@@ -188,6 +194,7 @@ export default {
         return;
       }
       this.audio.currentTime = time;
+      this.changeDraggerPosition(time * this.processScale);
     },
     //获取播放进度
     getCurrentTime() {
@@ -313,6 +320,26 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  //所有icon的浮动样式
+
+  .icon {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    font-weight: lighter;
+    text-align: center;
+    transition: var(--tran-03);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .icon:hover {
+    background-color: var(--primary-color);
+    color: var(--primary-color-light);
+    transition: var(--tran-03);
+  }
+
   .player-wrapper {
     width: 99%;
     height: calc(var(--player-height) - 10px);
@@ -357,16 +384,9 @@ export default {
         display: flex;
         justify-content: space-around;
         align-items: center;
+
+        //所有icon的浮动样式
         .icon {
-          width: 30px;
-          height: 30px;
-          line-height: 30px;
-          font-size: 20px;
-          font-weight: lighter;
-          text-align: center;
-          transition: var(--tran-03);
-          border-radius: 50%;
-          cursor: pointer;
           &:nth-child(3) {
             width: 40px;
             height: 40px;
@@ -374,11 +394,6 @@ export default {
           }
           &:nth-child(2) {
             transform: rotate(180deg);
-          }
-          &:hover {
-            background-color: var(--primary-color);
-            color: var(--primary-color-light);
-            transition: var(--tran-03);
           }
         }
       }
@@ -429,41 +444,97 @@ export default {
     }
     .other-ctl {
       width: 100px;
-      height: 100%;
+      height: calc(100% - 10px);
       position: relative;
-      .icon {
-        width: 30px;
-        height: 30px;
-        line-height: 30px;
-        text-align: center;
-        font-size: 20px;
-      }
-      #volume-ctl {
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-        border-radius: 50%;
-        text-align: center;
-        background-color: aliceblue;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateY(-50%) translateX(-50%);
-        transition: var(--tran-03);
-        i.volume {
+      .volume {
+        #volume-icon.icon {
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translateY(-50%) translateX(-50%);
+          font-size: 25px;
+          width: 40px;
+          height: 40px;
+          border-radius: 0;
+          line-height: 40px;
+          background-color: transparent;
+          z-index: 2;
         }
-        &:hover {
-          height: 100px;
-          border-radius: 15px;
-          transform: translateY(-65%) translateX(-50%);
-          i.volume {
-            bottom: 0;
+        #volume-ctl:hover,
+        #volume-icon.icon:hover ~ #volume-ctl {
+          & * {
+            transition: var(--tran-03);
+          }
+          transition: var(--tran-03);
+          position: absolute;
+          width: 40px;
+          height: 130px;
+          #volume-process {
+            width: 3px;
+            height: 100px;
+            #volume-passed {
+              width: 3px;
+              height: 10px;
+              #volume-dragger {
+                width: 10px;
+                height: 10px;
+              }
+            }
           }
         }
+        #volume-ctl {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateY(-40%) translateX(-50%);
+          width: 0px;
+          height: 0px;
+          border-radius: 25px;
+          background-color: var(--primary-color);
+          z-index: 1;
+          #volume-process {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            width: 0px;
+            height: 0px;
+            background-color: var(--primary-color-light);
+            #volume-passed {
+              position: absolute;
+              bottom: 0;
+              width: 0px;
+              height: 0px;
+              background-color: red;
+              #volume-dragger {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 0px;
+                height: 0px;
+                border-radius: 50%;
+                transform: translateY(-50%) translateX(-50%);
+                background-color: red;
+              }
+            }
+          }
+        }
+        // div#volume-ctl:hover,
+        // .icon:hover ~ div#volume-ctl {
+        //   height: 100px;
+        //   transition: var(--tran-03);
+        //   z-index: 5;
+        //   #volume-passed {
+        //     height: 80px;
+        //     width: 2px;
+        //     z-index: 6;
+        //     #volume-dragger {
+        //       width: 10px;
+        //       height: 10px;
+        //       z-index: 10;
+        //     }
+        //   }
+        // }
       }
     }
   }
@@ -471,15 +542,24 @@ export default {
 
 body.dark {
   #player {
+    .icon:hover {
+      color: var(--text-color);
+    }
     .player-wrapper {
       .player-ctl {
-        .icon:hover {
-          color: var(--text-color);
-        }
         .process-ctl {
           .process-bar {
             background-color: var(--text-color);
             #drager {
+              background-color: var(--text-color);
+            }
+          }
+        }
+      }
+      .other-ctl {
+        .volume {
+          #volume-ctl {
+            #volume-process {
               background-color: var(--text-color);
             }
           }

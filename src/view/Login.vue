@@ -58,7 +58,7 @@ export default {
               width: 180,
               margin: 0,
               color: {
-                dark: "#335eea",
+                dark: "#272727",
                 light: "#00000000",
               },
               type: "svg",
@@ -148,7 +148,7 @@ export default {
       height: 220px;
       width: 220px;
       padding: 20px 20px 20px 20px;
-      background-color: #97afff;
+      background-color: #dddddd;
       border-radius: 20px;
       margin-bottom: 10px;
     }
