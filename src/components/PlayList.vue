@@ -1,51 +1,29 @@
 <template>
   <div id="play-list">
-    <table>
-      <thead>
-        <tr>
-          <th class="thead"></th>
-          <th class="thead"></th>
-          <th class="thead">歌名</th>
-          <th class="thead">歌手</th>
-          <th class="thead">专辑</th>
-          <th class="thead">时间</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(item, index) in playList"
-          :key="item.id"
-          @dblclick="openPlayer(item.id, index)"
-        >
-          <td>{{ (index >= 9 ? "" : "0") + (index + 1) }}</td>
-          <td></td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.artists[0].name }}</td>
-          <td>{{ item.album.name }}</td>
-          <td>{{ item.duration | formatTime }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <PlayListItemVue
+      v-for="(item, subIndex) in playList"
+      :key="item.id"
+      :songsInfo="item"
+      :songsIndex="subIndex"
+    />
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import PlayListItemVue from "./PlayListItem.vue";
+
 export default {
   name: "play-list",
   props: ["playList"],
+  components: {
+    PlayListItemVue,
+  },
   data() {
     return {};
   },
   computed: {},
   mounted() {},
-  methods: {
-    ...mapActions("playList", ["changePlayList"]),
-    openPlayer(songsId, index) {
-      this.changePlayList(this.playList);
-      this.$bus.$emit("changeMusic", { songsId, index });
-    },
-  },
+  methods: {},
 };
 </script>
 

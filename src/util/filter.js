@@ -21,3 +21,15 @@ Vue.filter("formatTime", (Milliseconds, format = "HH:MM:SS") => {
     //TODO
   }
 });
+
+//格式化
+Vue.filter("artists", (artists) => {
+  if (!artists) return "";
+  return artists.length > 0
+    ? artists
+        .map((item) => {
+          return item.name;
+        })
+        .join("/")
+    : "";
+});

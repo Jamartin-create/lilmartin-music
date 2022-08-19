@@ -88,9 +88,11 @@ export default {
           type: "circle",
         },
       ],
-      isDraging: false,
-      curDuration: 0,
-      durationInterval: "",
+      isVolumeDraging: false,
+      curVolume: 0,
+      isProcessDraging: false,
+      curDuration: 0, //当前播放的进度
+      durationInterval: "", //定时器（同步播放进度和dragger）
     };
   },
   watched: {},
@@ -122,11 +124,16 @@ export default {
     ...mapActions("playList", ["changeCurSongs"]),
     //监听鼠标拖拽进度条
     draggerEventInit() {
-      //注册虚拟dom
+      //注册虚拟dom(进度控件)
       this.audio = this.$refs.audio;
       this.process = this.$refs.process;
       this.passedProcess = this.$refs.passedProcess;
       this.dragger = this.$refs.drager;
+      //音量控件
+      this.volumeCtl = this.$refs.volumeCtl;
+      this.volumeProcess = this.$refs.volumeProcess;
+      this.volumePassed = this.$refs.volumePassed;
+      this.volumeDragger = this.$refs.volumeDragger;
       //定义监听
       this.process.onmousedown = this.processMouseDown;
       this.dragger.onmousedown = this.draggerMouseDown;
@@ -135,17 +142,27 @@ export default {
     },
     //鼠标抬起
     mouseUp(event) {
-      if (!this.isDraging) return;
-      this.isDraging = false;
+      if (!this.isVolumeDraging && !this.isProcessDraging) return;
+      if (this.isProcessDraging) this.mouseUpFromProcess(event);
+      if (this.isVolumeDraging) this.mouseUpFromVolume(event);
+    },
+    //鼠标在全局移动
+    mouseMove(event) {
+      if (!this.isVolumeDraging && !this.isProcessDraging) return;
+      if (this.isProcessDraging) this.mouseMoveFromProcess(event);
+      if (this.isVolumeDraging) this.mouseMoveFromVolume(event);
+    },
+    /**
+     *
+     * 进度条控件
+     */
+    //鼠标拖动进度条时抬起
+    mouseUpFromProcess(event) {
+      this.isProcessDraging = false;
       if (!this.audio.paused) this.setDurationInterval();
       this.changeCurrentTime(this.computePassedLength(event));
     },
-    //绑定进度拖拽按钮监听
-    draggerMouseDown() {
-      this.isDraging = true;
-      this.clearDurationInterval();
-    },
-    //计算dragger移动的路径
+    //计算进度条dragger移动的路径
     computePassedLength(event) {
       let sideBarWidth = document
         .getElementById("sidebar")
@@ -161,9 +178,13 @@ export default {
       }
       return Math.floor(passedWidth / this.processScale);
     },
-    //鼠标在全局移动
-    mouseMove(event) {
-      if (!this.isDraging) return;
+    //绑定进度拖拽按钮监听
+    draggerMouseDown() {
+      this.isProcessDraging = true;
+      this.clearDurationInterval();
+    },
+    //鼠标拖动进度条时移动事件
+    mouseMoveFromProcess(event) {
       let passedTime = this.computePassedLength(event);
       this.changeDraggerPosition(passedTime * this.processScale);
     },
@@ -190,9 +211,6 @@ export default {
     },
     //改变播放进度
     changeCurrentTime(time) {
-      if (this.isDraging) {
-        return;
-      }
       this.audio.currentTime = time;
       this.changeDraggerPosition(time * this.processScale);
     },
@@ -200,6 +218,10 @@ export default {
     getCurrentTime() {
       return this.audio.currentTime;
     },
+
+    /**
+     * 播放控件
+     */
     //切换循环模式
     changeCircleMode() {
       this.selectCircleMode =
@@ -267,6 +289,10 @@ export default {
     randomCircle() {
       return Math.floor(Math.random() * (this.playList.length + 1));
     },
+
+    /**
+     * audio控件
+     */
     //根据index播放音乐
     play(index) {
       this.setMusicSrc({
