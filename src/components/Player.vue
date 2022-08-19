@@ -489,7 +489,7 @@ export default {
           transform: translateY(-40%) translateX(-50%);
           width: 0px;
           height: 0px;
-          border-radius: 25px;
+          border-radius: 8px;
           background-color: var(--primary-color);
           z-index: 1;
           #volume-process {
