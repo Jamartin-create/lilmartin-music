@@ -248,6 +248,7 @@ export default {
     },
     //下一首
     nextMusic() {
+      if (this.playList.length === 0) return;
       let index = this.curSongs.index;
       if (this.playList.length & (this.playList.length < 1)) {
         this.play(index);
@@ -262,6 +263,7 @@ export default {
     },
     //上一首
     lastMusic() {
+      if (this.playList.length === 0) return;
       let index = this.curSongs.index;
       if (this.playList.length & (this.playList.length < 1)) {
         this.play(index);

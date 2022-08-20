@@ -24,6 +24,13 @@
     --sidebar-close-width: 88px;
     --pannel-width: 300px;
     --player-height: 90px;
+    --content-min-width: 660px;
+
+    /*页面布局*/
+    /*1. 内容页*/
+    --content-padding-lr: 5%;
+    --content-padding-t: 3%;
+
 }
 
 

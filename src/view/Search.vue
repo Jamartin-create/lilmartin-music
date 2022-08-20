@@ -23,9 +23,10 @@
 </template>
 
 <script>
-import { searchByKeywords, getSonsUrl } from "@/api/playlist";
-import PlayList from "@/components/PlayList.vue";
-import AlbumList from "@/components/AlbumList.vue";
+import { searchByKeywords } from "@/api/playlist";
+import PlayList from "@/components/displayList/PlayList.vue";
+import AlbumList from "@/components/displayList/AlbumList.vue";
+import { searchNavBarList } from "@/js/navBarLists";
 
 export default {
   components: { PlayList, AlbumList },
@@ -33,18 +34,7 @@ export default {
     return {
       keywords: "",
       searched: 0,
-      searchType: [
-        {
-          id: 0,
-          name: "single",
-          label: "单曲",
-        },
-        {
-          id: 1,
-          name: "album",
-          label: "专辑",
-        },
-      ],
+      searchType: searchNavBarList,
       playList: [],
     };
   },
@@ -75,9 +65,9 @@ export default {
   height: 100%;
   min-width: 660px;
   overflow: scroll;
-  padding-top: 3%;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-top: var(--content-padding-t);
+  padding-left: var(--content-padding-lr);
+  padding-right: var(--content-padding-lr);
   &::-webkit-scrollbar {
     display: none;
   }

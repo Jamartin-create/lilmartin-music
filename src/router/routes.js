@@ -22,4 +22,9 @@ export default [
     name: "search",
     component: () => import("@/view/Search.vue"),
   },
+  {
+    path: "/library",
+    name: "library",
+    component: () => import("@/view/Library.vue"),
+  },
 ];

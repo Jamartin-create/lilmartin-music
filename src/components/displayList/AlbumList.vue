@@ -1,5 +1,5 @@
 <template>
-  <div>开发中</div>
+  <div>Album</div>
 </template>
 
 <script>

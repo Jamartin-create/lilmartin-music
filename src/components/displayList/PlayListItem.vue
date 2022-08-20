@@ -66,6 +66,11 @@ export default {
         font-size: 16px;
         opacity: 0.4;
       }
+      font-size: 16px;
+      &:nth-child(1) {
+        font-weight: bold;
+        font-size: 20px;
+      }
       &:nth-child(2),
       &:nth-child(3) {
         width: 30%;
