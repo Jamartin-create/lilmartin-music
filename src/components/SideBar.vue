@@ -90,22 +90,12 @@
 <script>
 import { mapState } from "vuex";
 import { doLogout, isLoging } from "@/util/auth";
+import { sideBarList } from "@/js/navBarLists";
 export default {
   name: "side-bar",
   data() {
     return {
-      menuList: [
-        {
-          name: "home",
-          label: "首页",
-          iconClassName: "icon-home1",
-        },
-        {
-          name: "setting",
-          label: "设置",
-          iconClassName: "icon-setting",
-        },
-      ],
+      menuList: sideBarList,
       isClose: false,
       defaultUserInfo: {
         avatar:
@@ -311,7 +301,7 @@ export default {
           width: 60px;
           i {
             position: absolute;
-            &.sun {
+            &.moon {
               opacity: 0;
             }
           }
@@ -387,10 +377,10 @@ body.dark {
           .sun-moon {
             i {
               &.sun {
-                opacity: 1;
+                opacity: 0;
               }
               &.moon {
-                opacity: 0;
+                opacity: 1;
               }
             }
           }
