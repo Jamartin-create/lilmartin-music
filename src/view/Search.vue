@@ -27,6 +27,7 @@ import { searchByKeywords } from "@/api/playlist";
 import PlayList from "@/components/displayList/PlayList.vue";
 import AlbumList from "@/components/displayList/AlbumList.vue";
 import { searchNavBarList } from "@/js/navBarLists";
+import nprogress from "nprogress";
 
 export default {
   components: { PlayList, AlbumList },
@@ -48,12 +49,16 @@ export default {
   },
   methods: {
     async searchByKeys() {
+      nprogress.start();
       const res = await searchByKeywords({
         keywords: this.keywords,
         limit: 40,
         offset: 1,
       });
-      this.playList = res.result.songs;
+      nprogress.done();
+      if (res.code === 200) {
+        this.playList = res.result.songs;
+      }
     },
   },
 };

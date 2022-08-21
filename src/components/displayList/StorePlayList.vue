@@ -31,7 +31,7 @@ export default {
   methods: {
     async getPlayList() {
       nprogress.start();
-      const res = await getUserPlayListMock({
+      const res = await getUserPlayList({
         uid: this.userId,
       });
       nprogress.done();
@@ -48,6 +48,7 @@ export default {
   margin-top: 3%;
   display: flex;
   flex-wrap: wrap;
+  transition: var(--tran-03);
   .playlist-item {
     width: calc(var(--content-min-width) / 4);
     margin: 10px auto;

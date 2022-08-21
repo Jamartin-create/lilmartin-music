@@ -6,6 +6,7 @@ import { getUserAccount, getUserPlayList } from "@/api/user";
 import updataApp from "@/util/updataApp";
 import mylocalStorage from "./userInitLocalStorage";
 import provinces from "./provinces";
+import nProgress from "nprogress";
 
 if (localStorage.getItem("data") === null) {
   localStorage.setItem("data", JSON.stringify(mylocalStorage.data));
@@ -29,20 +30,22 @@ const actions = {
    */
   async fetchUserAccount({ commit }) {
     if (!isLoging()) return;
-    const result = await getUserAccount();
-    if (result.code === 200) {
+    nProgress.start();
+    const res = await getUserAccount();
+    nProgress.done();
+    if (res.code === 200) {
       const provinceInfo = {
         provinceName: "未知",
         provinceLabel: "Unknow",
       };
       provinces.province.forEach((item) => {
-        if (item.code === result.profile.province) {
+        if (item.code === res.profile.province) {
           provinceInfo.provinceName = item.name;
           provinceInfo.provinceLabel = item.label;
         }
       });
       commit("UPDATE_USER_PROFILE", {
-        ...result.profile,
+        ...res.profile,
         ...provinceInfo,
       });
     }
@@ -55,10 +58,12 @@ const actions = {
   async fetchUserPlayList({ commit, state }) {
     if (!isAccountLogin()) return;
     if (isAccountLogin()) {
+      nProgress.start();
       return getUserPlayList({
         uid: state.data.profile.userId,
         limit: 2000,
       }).then((res) => {
+        nProgress.done();
         if (res.playlist) {
           commit("UPDATE_USER_PLAY_LIST", res.playlist);
           commit("UPDATE_USER_LIKE_PLAY_LIST_ID", res.playlist[0].id);

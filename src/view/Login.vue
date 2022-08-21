@@ -20,6 +20,7 @@ import { setCookies } from "@/util/auth";
 import { mapActions, mapMutations } from "vuex";
 import NProgress from "nprogress";
 import QRCode from "qrcode";
+import nprogress from "nprogress";
 export default {
   name: "login-page",
   data() {
@@ -48,8 +49,9 @@ export default {
     }),
     //生成二维码
     generateQrCode() {
+      nprogress.start();
       return getQrCodeKey().then((res) => {
-        console.log(res);
+        nprogress.done();
         if (res.code === 200) {
           this.qrCodeKey = res.data.unikey;
           QRCode.toString(
