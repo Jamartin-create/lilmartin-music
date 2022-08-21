@@ -30,7 +30,6 @@ export default {
       const res = await getUserMvList();
       nprogress.done();
       if (res.code === 200) {
-        console.log(res);
         this.mvLists = res.data;
       }
     },

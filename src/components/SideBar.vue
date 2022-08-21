@@ -138,8 +138,8 @@ export default {
     },
     logoutConfirm() {
       if (isLoging() && window.confirm("确认退出吗")) {
-        doLogout();
         this.changePage("login");
+        doLogout();
       }
     },
     isLoging() {
