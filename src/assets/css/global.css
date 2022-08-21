@@ -13,7 +13,7 @@
     --primary-color-light: #f1f1f1;
     --toggle-color: #ddd;
     --text-color: #707070;
-    --player-color: #dadada;
+    --music-process-color: rgb(61, 112, 223);
 
     /*过渡效果*/
     --tran-02: all 0.2s ease;
@@ -52,7 +52,7 @@ body.dark{
     --primary-color-light: #3a3b3c;
     --toggle-color: #fff;
     --text-color: #ccc;
-    --player-color: #242526;
+    --music-process-color: rgb(241, 125, 141);
 }
 
 

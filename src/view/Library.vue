@@ -83,7 +83,7 @@ export default {
     }
     .active {
       font-weight: bold;
-      border-bottom: 2px solid black;
+      border-bottom: 2px solid var(--text-color);
     }
   }
   #library-content-wrapper {

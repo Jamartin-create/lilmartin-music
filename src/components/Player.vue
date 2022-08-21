@@ -349,29 +349,10 @@ export default {
   justify-content: center;
   align-items: center;
 
-  //所有icon的浮动样式
-
-  .icon {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    font-size: 20px;
-    font-weight: lighter;
-    text-align: center;
-    transition: var(--tran-03);
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  .icon:hover {
-    background-color: var(--primary-color);
-    color: var(--primary-color-light);
-    transition: var(--tran-03);
-  }
-
   .player-wrapper {
     width: 99%;
     height: calc(var(--player-height) - 10px);
-    background-color: var(--player-color);
+    background-color: var(--sidebar-color);
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
@@ -415,6 +396,22 @@ export default {
 
         //所有icon的浮动样式
         .icon {
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+          font-size: 20px;
+          font-weight: lighter;
+          text-align: center;
+          transition: var(--tran-03);
+          border-radius: 50%;
+          cursor: pointer;
+        }
+        .icon:hover {
+          background-color: var(--primary-color);
+          color: var(--primary-color-light);
+          transition: var(--tran-03);
+        }
+        .icon {
           &:nth-child(3) {
             width: 40px;
             height: 40px;
@@ -431,7 +428,7 @@ export default {
         height: 15px;
         display: flex;
         align-items: center;
-        background-color: var(--player-color);
+        background-color: var(--sidbar-color);
         .process-bar {
           border: 20px;
           height: 2px;
@@ -446,8 +443,9 @@ export default {
           .passed-process {
             position: relative;
             width: 0px;
-            height: 110%;
-            background-color: rgb(207, 123, 123);
+            height: 100%;
+            border-radius: 6px;
+            background-color: var(--music-process-color);
             #drager {
               position: absolute;
               left: 0;
@@ -475,6 +473,15 @@ export default {
       height: calc(100% - 10px);
       position: relative;
       .volume {
+        .icon {
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+          font-size: 20px;
+          font-weight: lighter;
+          text-align: center;
+          cursor: pointer;
+        }
         #volume-icon.icon {
           position: absolute;
           top: 50%;
