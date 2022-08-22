@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
 import router from "./router";
+
 import "@/util/filter";
 import "nprogress/nprogress.css";
 import "@/assets/css/iconfont/iconfont";

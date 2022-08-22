@@ -20,3 +20,10 @@ export const getUserMVListMock = () => {
     url: "/hub/mv",
   });
 };
+
+export const getUserAlbumListMock = () => {
+  return request({
+    method: "get",
+    url: "/hub/album",
+  });
+};

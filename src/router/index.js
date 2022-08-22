@@ -46,7 +46,6 @@ router.beforeEach((to, from, next) => {
     if (isAccountLogin()) {
       next();
     } else {
-      console.log("login");
       next({ path: "/login" });
     }
   } else {

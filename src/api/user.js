@@ -51,6 +51,16 @@ export const getUserMvList = () => {
   });
 };
 
+export const getUserAlbumList = () => {
+  return request({
+    method: "get",
+    url: "/album/sublist",
+    params: {
+      timestamp: new Date().getTime(),
+    },
+  });
+};
+
 // 退出登录
 export const logout = () => {
   return request({

@@ -110,7 +110,7 @@ export default {
         this.updateUserLoginMode("account");
         this.fetchUserAccount().then(() => {
           this.fetchUserPlayList().then(() => {
-            this.$router.push({ path: "/" });
+            this.$router.push({ name: "library" });
           });
         });
       } else {

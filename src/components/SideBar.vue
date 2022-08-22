@@ -140,6 +140,8 @@ export default {
       if (isLoging() && window.confirm("确认退出吗")) {
         this.changePage("login");
         doLogout();
+      } else if (!isLoging()) {
+        this.changePage("login");
       }
     },
     isLoging() {
