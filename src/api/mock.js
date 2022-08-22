@@ -27,3 +27,31 @@ export const getUserAlbumListMock = () => {
     url: "/hub/album",
   });
 };
+
+export const getBannerMock = () => {
+  return request({
+    method: "get",
+    url: "/home/banner",
+  });
+};
+
+export const getRecomSongsMock = () => {
+  return request({
+    method: "get",
+    url: "/home/recSongs",
+  });
+};
+
+export const getRecomMVMock = () => {
+  return request({
+    method: "get",
+    url: "/home/recMV",
+  });
+};
+
+export const getRecomPlayListMock = () => {
+  return request({
+    method: "get",
+    url: "/home/recPlayList",
+  });
+};

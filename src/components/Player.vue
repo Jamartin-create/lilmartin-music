@@ -577,11 +577,13 @@ export default {
 
 body.dark {
   #player {
-    .icon:hover {
-      color: var(--text-color);
-    }
     .player-wrapper {
       .player-ctl {
+        .play-pause {
+          .icon:hover {
+            color: var(--text-color);
+          }
+        }
         .process-ctl {
           .process-bar {
             background-color: var(--text-color);

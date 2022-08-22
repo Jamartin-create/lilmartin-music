@@ -14,11 +14,20 @@
 <script>
 export default {
   name: "App",
+  create() {},
   mounted() {
+    //加载初始数据
+    this.loadBasicData();
     //判断皮肤状态
     if (!this.$store.state.sys.data.isLight) {
       document.querySelector("body").classList.add("dark");
     }
+  },
+  methods: {
+    loadBasicData() {
+      this.$store.dispatch("user/fetchUserAccount");
+      this.$store.dispatch("user/fetchUserPlayList");
+    },
   },
 };
 </script>

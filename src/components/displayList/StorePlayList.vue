@@ -31,12 +31,17 @@ export default {
   methods: {
     async getPlayList() {
       nprogress.start();
-      const res = await getUserPlayList({
-        uid: this.userId,
-      });
-      nprogress.done();
-      if (res.code === 200) {
-        this.playLists = res.playlist;
+      try {
+        const res = await getUserPlayList({
+          uid: this.userId,
+        });
+        if (res.code === 200) {
+          this.playLists = res.playlist;
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        nprogress.done();
       }
     },
   },

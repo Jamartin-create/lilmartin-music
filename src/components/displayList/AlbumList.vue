@@ -34,7 +34,7 @@ export default {
   methods: {
     async getAlbumList() {
       nprogress.start();
-      const res = await getUserAlbumListMock();
+      const res = await getUserAlbumList();
       nprogress.done();
       if (res.code === 200) {
         console.log(res);

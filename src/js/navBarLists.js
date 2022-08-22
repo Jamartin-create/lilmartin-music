@@ -49,3 +49,16 @@ export const libraryNavBarList = [
     label: "专辑",
   },
 ];
+
+export const homePageNavBarList = [
+  {
+    id: 0,
+    name: "recommend",
+    label: "个性推荐",
+  },
+  {
+    id: 1,
+    name: "newest",
+    label: "最新音乐",
+  },
+];

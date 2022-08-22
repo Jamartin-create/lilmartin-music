@@ -31,7 +31,7 @@ export default {
   methods: {
     ...mapActions("playList", ["changePlayList"]),
     openPlayer(songsId, index) {
-      this.changePlayList(this.playList);
+      this.changePlayList(this.$parent.playList);
       this.$bus.$emit("changeMusic", { songsId, index });
     },
   },

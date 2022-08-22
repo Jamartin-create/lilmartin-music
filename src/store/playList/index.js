@@ -14,11 +14,9 @@ const getters = {};
 
 const actions = {
   async changeCurSongs({ commit }, { songsId, index }) {
-    nProgress.start();
     const res = await getSongDetailById({
       ids: songsId,
     });
-    nProgress.done();
     console.log(res);
     if (res.code === 200) {
       const { songs } = res;
