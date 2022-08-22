@@ -1,6 +1,21 @@
 <template>
   <div id="recomendation">
     <!-- <div id="banner">轮播图</div> -->
+
+    <div id="rec-mv">
+      <div class="sub-title">推荐MV</div>
+      <div class="mv-list">
+        <div class="mv-item" v-for="mv in recMvList" :key="mv.id">
+          <div class="image">
+            <img :src="mv.picUrl" alt="" />
+          </div>
+          <div class="mvInfo">
+            <div class="mv-title">{{ mv.name }}</div>
+            <div class="mv-artists">{{ mv.artists | artists }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="rec-new-songs">
       <div class="sub-title">新歌速递</div>
       <div class="new-song-list">
@@ -15,20 +30,6 @@
           <div class="song-info">
             <div class="song-title">{{ newSong.name }}</div>
             <div class="song-artists">{{ newSong.song.artists | artists }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="rec-mv">
-      <div class="sub-title">推荐MV</div>
-      <div class="mv-list">
-        <div class="mv-item" v-for="mv in recMvList" :key="mv.id">
-          <div class="image">
-            <img :src="mv.picUrl" alt="" />
-          </div>
-          <div class="mvInfo">
-            <div class="mv-title">{{ mv.name }}</div>
-            <div class="mv-artists">{{ mv.artists | artists }}</div>
           </div>
         </div>
       </div>
@@ -204,7 +205,7 @@ export default {
       justify-content: space-around;
       margin: 3% auto;
       .store-item {
-        width: calc(100% / 5 - 20px);
+        width: calc(100% / 5 - 40px);
         margin: 10px auto;
         .image {
           img {
