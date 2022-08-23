@@ -78,3 +78,45 @@ main {
   }
 }
 </style>
+
+<style lang="less">
+.content-page {
+  width: 100%;
+  height: 100%;
+  min-width: var(--content-min-width);
+  overflow: scroll;
+  padding-top: var(--content-padding-t);
+  padding-left: var(--content-padding-lr);
+  padding-right: var(--content-padding-lr);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .title {
+    font-size: 30px;
+    height: 55px;
+    line-height: 55px;
+    .high-light {
+      font-weight: bold;
+    }
+  }
+  .nav {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 22px;
+    div {
+      cursor: pointer;
+      &:hover {
+        font-weight: bold;
+      }
+    }
+    .active {
+      font-weight: bold;
+      border-bottom: 2px solid var(--text-color);
+    }
+  }
+  .subpage-wrapper {
+    margin-top: 3%;
+  }
+}
+</style>

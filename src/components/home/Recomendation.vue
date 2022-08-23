@@ -49,12 +49,11 @@
 </template>
 
 <script>
-// import {
-//   getBanner,
-//   getRecomMV,
-//   getRecomPlayList,
-//   getRecomSongs,
-// } from "@/api/mock";
+import // getBanner,
+// getRecMV,
+// getRecomPlayList,
+// getRecomSongs,
+"@/api/mock";
 
 import {
   getBanner,
@@ -142,7 +141,6 @@ export default {
 
 <style lang="less" scoped>
 #recomendation {
-  margin-top: 3%;
   #banner {
   }
   .sub-title {
@@ -218,7 +216,7 @@ export default {
       margin: 3% auto;
       .store-item {
         width: calc(100% / 5 - 40px);
-        margin: 10px auto;
+        margin: 10px 20px;
         .image {
           img {
             width: 100%;

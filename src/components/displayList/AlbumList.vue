@@ -1,17 +1,17 @@
 <template>
   <div id="album-list">
     <div class="album-item" v-for="album in albumList" :key="album.id">
-      <div class="image">
+      <div class="album-image">
         <img :src="album.picUrl" alt="" />
       </div>
-      <div class="title">
+      <div class="album-title">
         {{ album.name }}
-        <span class="alias">
+        <span class="album-alias">
           {{ album.alias[0] ? "(" + album.alias[0] + ")" : "" }}
         </span>
       </div>
-      <div class="artist">{{ album.artists[0].name }}</div>
-      <div class="songs-num">{{ album.size }}首</div>
+      <div class="album-artist">{{ album.artists[0].name }}</div>
+      <div class="album-songs-num">{{ album.size }}首</div>
     </div>
   </div>
 </template>
@@ -47,8 +47,6 @@ export default {
 
 <style lang="less" scoped>
 #album-list {
-  margin-top: 3%;
-  min-width: 660px;
   .album-item {
     display: flex;
     justify-content: space-around;
@@ -62,32 +60,32 @@ export default {
       color: var(--primary-color-light);
     }
     font-size: 20px;
-    .image,
-    .title,
-    .artist,
-    .songs-num {
+    .album-image,
+    .album-title,
+    .album-artist,
+    .album-songs-num {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .image {
+    .album-image {
       width: 10%;
       img {
         width: 100%;
         border-radius: 6px;
       }
     }
-    .title {
+    .album-title {
       width: 50%;
-      .alias {
+      .album-alias {
         font-size: 16px;
         opacity: 0.6;
       }
     }
-    .artist {
+    .album-artist {
       width: 20%;
     }
-    .songs-num {
+    .album-songs-num {
       width: 10%;
       text-align: right;
     }

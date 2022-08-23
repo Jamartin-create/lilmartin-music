@@ -1,18 +1,18 @@
 <template>
-  <div id="home-wrapper">
+  <div id="home-wrapper" class="content-page">
     <div class="title">发现音乐</div>
     <div class="nav">
-      <div class="tab-bar">
-        <span
-          class="bar"
-          v-for="mode in homePageNavBarList"
-          :class="searched === mode.id ? 'active' : ''"
-          :key="mode.id"
-          @click="searched = mode.id"
-        >
-          {{ mode.label }}
-        </span>
-      </div>
+      <span
+        class="bar"
+        v-for="mode in homePageNavBarList"
+        :class="searched === mode.id ? 'active' : ''"
+        :key="mode.id"
+        @click="searched = mode.id"
+      >
+        {{ mode.label }}
+      </span>
+    </div>
+    <div class="subpage-wrapper">
       <Recomendation v-show="searched === 0" />
     </div>
   </div>
@@ -36,36 +36,5 @@ export default {
 
 <style lang="less" scoped>
 #home-wrapper {
-  width: 100%;
-  height: 100%;
-  min-width: 660px;
-  overflow: scroll;
-  padding-top: var(--content-padding-t);
-  padding-left: var(--content-padding-lr);
-  padding-right: var(--content-padding-lr);
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  .title {
-    font-size: 30px;
-    height: 55px;
-    line-height: 55px;
-  }
-  .nav {
-    position: relative;
-    margin-top: 5%;
-    .tab-bar {
-      display: flex;
-      justify-content: space-evenly;
-      .bar {
-        font-size: 22px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-      .bar.active {
-        border-bottom: 2px solid var(--text-color);
-      }
-    }
-  }
 }
 </style>

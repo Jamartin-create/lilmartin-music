@@ -42,7 +42,12 @@
               changePage('search');
             "
           ></i>
-          <input v-model="searchKeywords" type="text" placeholder="搜索..." />
+          <input
+            v-model="searchKeywords"
+            type="text"
+            placeholder="搜索..."
+            @keydown.enter="changePage('search')"
+          />
         </li>
         <ul class="menu-links">
           <li

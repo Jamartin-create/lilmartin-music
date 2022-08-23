@@ -29,8 +29,6 @@ export default {
 
 <style lang="less" scoped>
 #play-list {
-  margin-top: 3%;
-  width: 100%;
 }
 body.dark {
   #play-list {

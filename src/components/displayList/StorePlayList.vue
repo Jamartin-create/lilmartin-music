@@ -5,11 +5,11 @@
       v-for="playList in playLists"
       :key="playList.id"
     >
-      <div class="cover-image">
+      <div class="store-cover-image">
         <img :src="playList.coverImgUrl" alt="" />
       </div>
-      <span class="title">{{ playList.name }}</span>
-      <span class="creator"> by {{ playList.creator.nickname }}</span>
+      <span class="store-title">{{ playList.name }}</span>
+      <span class="store-creator"> by {{ playList.creator.nickname }}</span>
     </span>
   </div>
 </template>
@@ -50,7 +50,6 @@ export default {
 
 <style lang="less" scoped>
 #store-list {
-  margin-top: 3%;
   display: flex;
   flex-wrap: wrap;
   transition: var(--tran-03);
@@ -61,7 +60,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    .cover-image {
+    .store-cover-image {
       width: calc(var(--content-min-width) / 4 - 20px);
       height: calc(var(--content-min-width) / 4 - 20px);
       border-radius: 6px;
@@ -70,17 +69,17 @@ export default {
         width: calc(var(--content-min-width) / 4 - 20px);
       }
     }
-    .title,
-    .creator {
+    .store-title,
+    .store-creator {
       width: calc(var(--content-min-width) / 4 - 20px);
       align-self: flex-start;
       margin-left: 10px;
       font-size: 14px;
     }
-    .title {
+    .store-title {
       margin-top: 5px;
     }
-    .creator {
+    .store-creator {
       margin-top: 3px;
       opacity: 0.6;
     }

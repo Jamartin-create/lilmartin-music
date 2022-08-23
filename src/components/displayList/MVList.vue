@@ -1,11 +1,11 @@
 <template>
   <div id="mv-list">
     <span class="mvlist-item" v-for="mvList in mvLists" :key="mvList.vid">
-      <div class="cover-image">
+      <div class="mv-cover-image">
         <img :src="`${mvList.coverUrl}?param=464y240`" alt="" />
       </div>
-      <span class="title">{{ mvList.title }}</span>
-      <span class="creator"> by {{ mvList.creator[0].userName }}</span>
+      <span class="mv-title">{{ mvList.title }}</span>
+      <span class="mv-creator"> by {{ mvList.creator[0].userName }}</span>
     </span>
   </div>
 </template>
@@ -39,7 +39,6 @@ export default {
 
 <style lang="less" scoped>
 #mv-list {
-  margin-top: 3%;
   display: flex;
   flex-wrap: wrap;
   .mvlist-item {
@@ -47,14 +46,14 @@ export default {
     flex-direction: column;
     margin: 10px auto;
     width: 30%;
-    .cover-image {
+    .mv-cover-image {
       img {
         border-radius: 8px;
         width: 100%;
       }
     }
-    .title,
-    .creator {
+    .mv-title,
+    .mv-creator {
       width: calc(100% - 20px);
       overflow: hidden;
       text-overflow: ellipsis;
@@ -62,10 +61,10 @@ export default {
       margin-left: 10px;
       font-size: 14px;
     }
-    .title {
+    .mv-title {
       margin-top: 5px;
     }
-    .creator {
+    .mv-creator {
       margin-top: 3px;
       opacity: 0.6;
     }

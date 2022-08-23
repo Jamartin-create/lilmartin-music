@@ -49,7 +49,7 @@ export const getRecomMVMock = () => {
   });
 };
 
-export const getRecomPlayListMock = () => {
+export const getRecomPlayList = () => {
   return request({
     method: "get",
     url: "/home/recPlayList",
