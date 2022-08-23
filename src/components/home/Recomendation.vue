@@ -49,12 +49,20 @@
 </template>
 
 <script>
+// import {
+//   getBanner,
+//   getRecomMV,
+//   getRecomPlayList,
+//   getRecomSongs,
+// } from "@/api/mock";
+
 import {
-  getBannerMock,
-  getRecomMVMock,
-  getRecomPlayListMock,
-  getRecomSongsMock,
-} from "@/api/mock";
+  getBanner,
+  getRecMV,
+  getRecomPlayList,
+  getRecomSongs,
+} from "@/api/home";
+import nprogress from "nprogress";
 export default {
   data() {
     return {
@@ -73,7 +81,7 @@ export default {
   methods: {
     async getBanner() {
       try {
-        const res = await getBannerMock();
+        const res = await getBanner();
         if (res.code === 200) {
           this.banner = res.banner;
         } else {
@@ -86,7 +94,7 @@ export default {
     },
     async getRecomMV() {
       try {
-        const res = await getRecomMVMock();
+        const res = await getRecMV();
         if (res.code === 200) {
           this.recMvList = res.result.slice(0, 3);
         } else {
@@ -99,7 +107,7 @@ export default {
     },
     async getRecomPlayList() {
       try {
-        const res = await getRecomPlayListMock();
+        const res = await getRecomPlayList();
         if (res.code === 200) {
           this.recPlayList = res.result;
           console.log(res);
@@ -113,7 +121,11 @@ export default {
     },
     async getRecomSongs() {
       try {
-        const res = await getRecomSongsMock();
+        nprogress.start();
+        const res = await getRecomSongs({
+          limit: 12,
+        });
+        nprogress.done();
         if (res.code === 200) {
           this.recNewSongs = res.result;
         } else {

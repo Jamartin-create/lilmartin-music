@@ -40,7 +40,7 @@ export const getUserPlayList = (params) => {
   });
 };
 
-//获取mv
+//获取用户收藏mv
 export const getUserMvList = () => {
   return request({
     method: "get",
@@ -51,6 +51,7 @@ export const getUserMvList = () => {
   });
 };
 
+//获取用户收藏专辑
 export const getUserAlbumList = () => {
   return request({
     method: "get",
