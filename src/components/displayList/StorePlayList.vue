@@ -15,36 +15,14 @@
 </template>
 
 <script>
-import { getUserPlayList } from "@/api/user";
-import { getUserPlayListMock } from "@/api/mock";
-import nprogress from "nprogress";
 export default {
-  props: ["userId"],
+  props: ["playLists"],
   data() {
-    return {
-      playLists: [],
-    };
+    return {};
   },
-  mounted() {
-    this.getPlayList();
-  },
-  methods: {
-    async getPlayList() {
-      nprogress.start();
-      try {
-        const res = await getUserPlayList({
-          uid: this.userId,
-        });
-        if (res.code === 200) {
-          this.playLists = res.playlist;
-        }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        nprogress.done();
-      }
-    },
-  },
+  watch: {},
+  mounted() {},
+  methods: {},
 };
 </script>
 

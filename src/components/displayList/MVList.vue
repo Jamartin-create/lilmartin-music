@@ -11,29 +11,13 @@
 </template>
 
 <script>
-import { getUserMVListMock } from "@/api/mock";
-import { getUserMvList } from "@/api/user";
-import nprogress from "nprogress";
-
 export default {
+  props: ["mvLists"],
   data() {
-    return {
-      mvLists: [],
-    };
+    return {};
   },
-  mounted() {
-    this.getUserMvList();
-  },
-  methods: {
-    async getUserMvList() {
-      nprogress.start();
-      const res = await getUserMvList();
-      nprogress.done();
-      if (res.code === 200) {
-        this.mvLists = res.data;
-      }
-    },
-  },
+  mounted() {},
+  methods: {},
 };
 </script>
 

@@ -2,7 +2,7 @@
   <div id="search" class="content-page">
     <div class="title">
       搜索
-      <span class="hight-light">“{{ keywords ? keywords : "" }}”</span>
+      <span class="high-light">“{{ keywords ? keywords : "" }}”</span>
     </div>
     <div class="nav">
       <span
@@ -17,7 +17,7 @@
     </div>
     <div class="subpage-wrapper">
       <PlayList v-if="searched === 0" :playList="playList" />
-      <AlbumList v-if="searched === 1" />
+      <AlbumList v-if="searched === 1" :albumLists="albumList" />
     </div>
   </div>
 </template>
@@ -37,27 +37,58 @@ export default {
       searched: 0,
       searchType: searchNavBarList,
       playList: [],
+      albumList: [],
+      limit: 40,
     };
   },
+  computed: {},
   mounted() {
     this.$bus.$on("research", async (keywords) => {
       this.keywords = keywords;
-      this.searchByKeys();
+      this.searchAll();
     });
     this.keywords = this.$route.query.keywords;
-    this.searchByKeys();
+    this.searchAll();
   },
   methods: {
-    async searchByKeys() {
-      nprogress.start();
-      const res = await searchByKeywords({
-        keywords: this.keywords,
-        limit: 40,
-        offset: 1,
-      });
-      nprogress.done();
-      if (res.code === 200) {
-        this.playList = res.result.songs;
+    searchAll() {
+      this.searchSingleByKeys();
+      this.searchAlbumByKeys();
+    },
+    async searchSingleByKeys() {
+      try {
+        nprogress.start();
+        const res = await searchByKeywords({
+          keywords: this.keywords,
+          limit: this.limit,
+          offset: this.playList.length / this.limit + 1,
+          type: 1,
+        });
+        if (res.code === 200) {
+          this.playList = this.playList.concat(res.result.songs);
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        nprogress.done();
+      }
+    },
+    async searchAlbumByKeys() {
+      try {
+        nprogress.start();
+        const res = await searchByKeywords({
+          keywords: this.keywords,
+          limit: this.limit,
+          offset: Math.floor(this.albumList.length / this.limit) + 1,
+          type: 10,
+        });
+        if (res.code === 200) {
+          this.albumList = this.albumList.concat(res.result.albums);
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        nprogress.done();
       }
     },
   },
@@ -65,6 +96,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#search {
-}
 </style>

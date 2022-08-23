@@ -24,11 +24,13 @@ export const searchNavBarList = [
     id: 0,
     name: "single",
     label: "单曲",
+    type: 1,
   },
   {
     id: 1,
     name: "album",
     label: "专辑",
+    type: 10,
   },
 ];
 

@@ -72,12 +72,15 @@ export default {
     };
   },
   mounted() {
-    this.getBanner();
-    this.getRecomMV();
-    this.getRecomPlayList();
-    this.getRecomSongs();
+    this.getAll();
   },
   methods: {
+    getAll() {
+      this.getBanner();
+      this.getRecomMV();
+      this.getRecomPlayList();
+      this.getRecomSongs();
+    },
     async getBanner() {
       try {
         const res = await getBanner();

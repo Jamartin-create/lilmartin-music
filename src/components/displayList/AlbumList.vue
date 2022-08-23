@@ -1,6 +1,6 @@
 <template>
   <div id="album-list">
-    <div class="album-item" v-for="album in albumList" :key="album.id">
+    <div class="album-item" v-for="album in albumLists" :key="album.id">
       <div class="album-image">
         <img :src="album.picUrl" alt="" />
       </div>
@@ -10,38 +10,20 @@
           {{ album.alias[0] ? "(" + album.alias[0] + ")" : "" }}
         </span>
       </div>
-      <div class="album-artist">{{ album.artists[0].name }}</div>
+      <div class="album-artist">{{ album.artists | artists }}</div>
       <div class="album-songs-num">{{ album.size }}首</div>
     </div>
   </div>
 </template>
 
 <script>
-import { getUserAlbumListMock } from "@/api/mock";
-import { getUserAlbumList } from "@/api/user";
-import nprogress from "nprogress";
-
 export default {
-  name: "AlbumList",
+  props: ["albumLists"],
   data() {
-    return {
-      albumList: [],
-    };
+    return {};
   },
-  mounted() {
-    this.getAlbumList();
-  },
-  methods: {
-    async getAlbumList() {
-      nprogress.start();
-      const res = await getUserAlbumList();
-      nprogress.done();
-      if (res.code === 200) {
-        console.log(res);
-        this.albumList = res.data;
-      }
-    },
-  },
+  mounted() {},
+  methods: {},
 };
 </script>
 
@@ -51,7 +33,7 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 20px auto;
+    margin: 10px auto;
     padding: 1% 1%;
     border-radius: 6px;
     transition: var(--tran-03);
@@ -69,7 +51,7 @@ export default {
       text-overflow: ellipsis;
     }
     .album-image {
-      width: 10%;
+      width: 5%;
       img {
         width: 100%;
         border-radius: 6px;
