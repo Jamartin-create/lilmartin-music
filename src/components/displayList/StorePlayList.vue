@@ -4,6 +4,7 @@
       class="playlist-item"
       v-for="playList in playLists"
       :key="playList.id"
+      @click="toPlayListPage(playList.id)"
     >
       <div class="store-cover-image">
         <img :src="playList.coverImgUrl" alt="" />
@@ -22,7 +23,12 @@ export default {
   },
   watch: {},
   mounted() {},
-  methods: {},
+  methods: {
+    toPlayListPage(playListId) {
+      this.$bus.$emit("replaylist", playListId);
+      this.$router.push({ name: "playList", query: { id: playListId } });
+    },
+  },
 };
 </script>
 

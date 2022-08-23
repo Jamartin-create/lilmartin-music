@@ -49,12 +49,6 @@
 </template>
 
 <script>
-import // getBanner,
-// getRecMV,
-// getRecomPlayList,
-// getRecomSongs,
-"@/api/mock";
-
 import {
   getBanner,
   getRecMV,
@@ -112,7 +106,6 @@ export default {
         const res = await getRecomPlayList();
         if (res.code === 200) {
           this.recPlayList = res.result;
-          console.log(res);
         } else {
           console.log(res);
         }
@@ -144,8 +137,6 @@ export default {
 
 <style lang="less" scoped>
 #recomendation {
-  #banner {
-  }
   .sub-title {
     display: inline;
     font-size: 24px;
@@ -200,8 +191,6 @@ export default {
             width: 100%;
             border-radius: 6px;
           }
-        }
-        .mv-title {
         }
         .mv-artists {
           opacity: 0.7;

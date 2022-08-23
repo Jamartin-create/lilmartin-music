@@ -5,6 +5,7 @@ export default [
     component: () => import("@/view/Mine.vue"),
     meta: {
       requireLogin: false,
+      keepAlive: true,
     },
   },
   {
@@ -21,6 +22,7 @@ export default [
     component: () => import("@/view/Setting.vue"),
     meta: {
       requireLogin: false,
+      keepAlive: true,
     },
   },
   {
@@ -29,6 +31,16 @@ export default [
     component: () => import("@/view/Search.vue"),
     meta: {
       requireLogin: false,
+      keepAlive: false,
+    },
+  },
+  {
+    path: "/playListPage",
+    name: "playList",
+    component: () => import("@/view/PlayListPage.vue"),
+    meta: {
+      requireLogin: false,
+      keepAlive: false,
     },
   },
   {
@@ -37,6 +49,7 @@ export default [
     component: () => import("@/view/Library.vue"),
     meta: {
       requireLogin: true,
+      keepAlive: true,
     },
   },
 ];

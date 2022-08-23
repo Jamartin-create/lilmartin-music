@@ -41,3 +41,14 @@ export const getSongDetailById = (params) => {
     },
   });
 };
+
+export const getPlayListAllSongsById = (params) => {
+  return request({
+    method: "get",
+    url: "/playlist/detail",
+    params: {
+      ...params,
+      timestamp: new Date().getTime(),
+    },
+  });
+};

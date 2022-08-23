@@ -8,17 +8,18 @@ Vue.filter("formatTime", (Milliseconds, format = "HH:MM:SS") => {
   dayjs.extend(duration);
   dayjs.extend(relativeTime);
 
-  let time = dayjs.duration(Milliseconds);
-  let hours = time.hours().toString();
-  let mins = time.minutes().toString();
-  let seconds = time.seconds().toString().padStart(2, "0");
-
   if (format === "HH:MM:SS") {
+    let time = dayjs.duration(Milliseconds);
+    let hours = time.hours().toString();
+    let mins = time.minutes().toString();
+    let seconds = time.seconds().toString().padStart(2, "0");
     return hours !== "0"
       ? `${hours}:${mins.padStart(2, "0")}:${seconds}`
       : `${mins}:${seconds}`;
   } else if (format === "Human") {
+    let time = dayjs(Milliseconds);
     //TODO
+    return `${time.year()}年${time.month() + 1}月${time.date()}日`;
   }
 });
 

@@ -3,8 +3,9 @@
     <side-bar></side-bar>
     <main>
       <keep-alive>
-        <router-view></router-view>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
     </main>
     <player></player>
     <pannel></pannel>
@@ -64,7 +65,7 @@ main {
   transition: var(--tran-03);
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   #pannel {
     display: none;
   }

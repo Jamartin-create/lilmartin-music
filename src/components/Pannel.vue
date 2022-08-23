@@ -10,7 +10,7 @@ export default {
 
 <style lang="less" scoped>
 #pannel {
-  width: 300px;
+  width: var(--pannel-width);
   position: absolute;
   right: 0;
   height: calc(100% - var(--player-height));

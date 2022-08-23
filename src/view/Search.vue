@@ -42,6 +42,11 @@ export default {
     };
   },
   computed: {},
+  watch: {
+    $route: function (to, from) {
+      console.log(to, from);
+    },
+  },
   mounted() {
     this.$bus.$on("research", async (keywords) => {
       this.keywords = keywords;
@@ -61,11 +66,11 @@ export default {
         const res = await searchByKeywords({
           keywords: this.keywords,
           limit: this.limit,
-          offset: this.playList.length / this.limit + 1,
+          offset: Math.floor(this.playList.length / this.limit),
           type: 1,
         });
         if (res.code === 200) {
-          this.playList = this.playList.concat(res.result.songs);
+          this.playList = res.result.songs;
         }
       } catch (e) {
         console.log(e);
@@ -83,7 +88,7 @@ export default {
           type: 10,
         });
         if (res.code === 200) {
-          this.albumList = this.albumList.concat(res.result.albums);
+          this.albumList = res.result.albums;
         }
       } catch (e) {
         console.log(e);
