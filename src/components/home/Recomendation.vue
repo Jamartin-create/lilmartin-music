@@ -1,7 +1,6 @@
 <template>
   <div id="recomendation">
-    <!-- <div id="banner">轮播图</div> -->
-
+    <Banner :bannerList="banner" />
     <div id="rec-mv">
       <div class="sub-title">推荐MV</div>
       <div class="mv-list">
@@ -55,8 +54,19 @@ import {
   getRecomPlayList,
   getRecomSongs,
 } from "@/api/home";
+// import {
+//   getBanner,
+//   getRecomPlayList,
+//   getRecMV,
+//   getRecomSongs,
+// } from "@/api/mock";
 import nprogress from "nprogress";
+import Banner from "../Banner.vue";
+
 export default {
+  components: {
+    Banner,
+  },
   data() {
     return {
       banner: [],
@@ -79,7 +89,8 @@ export default {
       try {
         const res = await getBanner();
         if (res.code === 200) {
-          this.banner = res.banner;
+          console.log(res);
+          this.banner = res.banners;
         } else {
           console.log(res);
         }

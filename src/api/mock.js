@@ -28,21 +28,21 @@ export const getUserAlbumListMock = () => {
   });
 };
 
-export const getBannerMock = () => {
+export const getBanner = () => {
   return request({
     method: "get",
     url: "/home/banner",
   });
 };
 
-export const getRecomSongsMock = () => {
+export const getRecomSongs = () => {
   return request({
     method: "get",
     url: "/home/recSongs",
   });
 };
 
-export const getRecomMVMock = () => {
+export const getRecMV = () => {
   return request({
     method: "get",
     url: "/home/recMV",
