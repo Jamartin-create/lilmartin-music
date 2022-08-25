@@ -44,6 +44,15 @@ export default [
     },
   },
   {
+    path: "/albumPage",
+    name: "album",
+    component: () => import("@/view/AlbumPage.vue"),
+    meta: {
+      requireLogin: false,
+      keepAlive: false,
+    },
+  },
+  {
     path: "/library",
     name: "library",
     component: () => import("@/view/Library.vue"),

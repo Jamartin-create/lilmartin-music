@@ -6,7 +6,7 @@
       <div class="mv-list">
         <div class="mv-item" v-for="mv in recMvList" :key="mv.id">
           <div class="image">
-            <img :src="mv.picUrl" alt="" />
+            <img :src="mv.picUrl" alt="" loading="lazy" />
           </div>
           <div class="mvInfo">
             <div class="mv-title">{{ mv.name }}</div>
@@ -20,8 +20,9 @@
       <div class="new-song-list">
         <div
           class="new-song-item"
-          v-for="newSong in recNewSongs"
+          v-for="(newSong, index) in recNewSongs"
           :key="newSong.id"
+          @click="openPlayer(newSong.id, index)"
         >
           <div class="image">
             <img :src="newSong.picUrl" alt="" />
@@ -36,9 +37,18 @@
     <div id="rec-play-list">
       <div class="sub-title">推荐歌单</div>
       <div class="store-list">
-        <div class="store-item" v-for="store in recPlayList" :key="store.id">
+        <div
+          class="store-item"
+          v-for="store in recPlayList"
+          :key="store.id"
+          @click="toPlayListPage(store.id)"
+        >
           <div class="image">
-            <img :src="store.picUrl" alt="" />
+            <img :src="store.picUrl" alt="" loading="lazy" />
+            <div
+              class="shadow"
+              :style="{ backgroundImage: `url(${store.picUrl})` }"
+            ></div>
           </div>
           <div class="store-title">{{ store.name }}</div>
         </div>
@@ -62,6 +72,7 @@ import {
 // } from "@/api/mock";
 import nprogress from "nprogress";
 import Banner from "../Banner.vue";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -79,6 +90,15 @@ export default {
     this.getAll();
   },
   methods: {
+    ...mapActions("playList", ["changePlayList"]),
+    openPlayer(songsId, index) {
+      this.changePlayList(this.recNewSongs);
+      this.$bus.$emit("changeMusic", { songsId, index });
+    },
+    toPlayListPage(playListId) {
+      this.$bus.$emit("replaylist", playListId);
+      this.$router.push({ name: "playList", query: { id: playListId } });
+    },
     getAll() {
       this.getBanner();
       this.getRecomMV();
@@ -89,7 +109,6 @@ export default {
       try {
         const res = await getBanner();
         if (res.code === 200) {
-          console.log(res);
           this.banner = res.banners;
         } else {
           console.log(res);
@@ -162,10 +181,19 @@ export default {
       .new-song-item {
         display: flex;
         width: calc(100% / 3 - 20px);
-        margin: 10px auto;
+        height: 80px;
+        padding: 10px 10px;
+        align-items: center;
+        transition: var(--tran-03);
+        border-radius: 6px;
+        &:hover {
+          background-color: var(--primary-color);
+          color: var(--primary-color-light);
+          transition: var(--tran-03);
+        }
         .image {
           img {
-            width: 80px;
+            width: 60px;
             border-radius: 6px;
           }
         }
@@ -221,15 +249,43 @@ export default {
         width: calc(100% / 5 - 40px);
         margin: 10px 20px;
         .image {
+          position: relative;
           img {
             width: 100%;
             border-radius: 6px;
+          }
+          &:hover .shadow {
+            height: 100%;
+            width: 100%;
+          }
+          .shadow {
+            height: 0;
+            width: 0;
+            position: absolute;
+            top: 12px;
+            filter: blur(16px) opacity(0.6);
+            transform: scale(0.92, 0.96);
+            z-index: -1;
+            background-size: cover;
+            border-radius: 0.75em;
+            aspect-ratio: 1 / 1;
+            transition: var(--tran-03);
           }
         }
       }
       .store-title {
         margin-top: 10px;
         font-size: 16px;
+      }
+    }
+  }
+}
+
+body.dark #recomendation #rec-new-songs {
+  .new-song-list {
+    .new-song-item {
+      &:hover {
+        color: var(--text-color);
       }
     }
   }

@@ -1,8 +1,13 @@
 <template>
   <div id="album-list">
-    <div class="album-item" v-for="album in albumLists" :key="album.id">
+    <div
+      class="album-item"
+      v-for="album in albumLists"
+      :key="album.id"
+      @click="toAlbumPage(album.id)"
+    >
       <div class="album-image">
-        <img :src="album.picUrl" alt="" />
+        <img :src="album.picUrl" alt="" loading="lazy" />
       </div>
       <div class="album-title">
         {{ album.name }}
@@ -23,7 +28,12 @@ export default {
     return {};
   },
   mounted() {},
-  methods: {},
+  methods: {
+    toAlbumPage(albumId) {
+      this.$bus.$emit("realbum", albumId);
+      this.$router.push({ name: "album", query: { id: albumId } });
+    },
+  },
 };
 </script>
 

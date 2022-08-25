@@ -2,7 +2,7 @@
   <div id="mv-list">
     <span class="mvlist-item" v-for="mvList in mvLists" :key="mvList.vid">
       <div class="mv-cover-image">
-        <img :src="`${mvList.coverUrl}?param=464y240`" alt="" />
+        <img :src="`${mvList.coverUrl}?param=464y240`" alt="" loading="lazy" />
       </div>
       <span class="mv-title">{{ mvList.title }}</span>
       <span class="mv-creator"> by {{ mvList.creator[0].userName }}</span>

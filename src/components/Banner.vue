@@ -13,9 +13,9 @@
             : ''
         "
         v-for="(banner, index) in bannerList"
-        :key="banner.targetId"
+        :key="index"
       >
-        <img :src="banner.imageUrl" alt="" />
+        <img :src="banner.imageUrl" alt="" loading="lazy" />
       </div>
     </div>
     <button
