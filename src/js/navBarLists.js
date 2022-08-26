@@ -11,12 +11,12 @@ export const sideBarList = [
     label: "音乐库",
     iconClassName: "icon-library",
   },
-  {
-    id: 2,
-    name: "setting",
-    label: "设置",
-    iconClassName: "icon-setting",
-  },
+  // {
+  //   id: 2,
+  //   name: "setting",
+  //   label: "设置",
+  //   iconClassName: "icon-setting",
+  // },
 ];
 
 export const searchNavBarList = [

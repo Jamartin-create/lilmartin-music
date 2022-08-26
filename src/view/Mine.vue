@@ -33,8 +33,3 @@ export default {
   created() {},
 };
 </script>
-
-<style lang="less" scoped>
-#home-wrapper {
-}
-</style>
