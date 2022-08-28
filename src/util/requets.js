@@ -2,7 +2,12 @@ import router from "@/router";
 import axios from "axios";
 import { doLogout, getCookie } from "./auth";
 
-const baseURL = "https://lilcmapi.vercel.app/";
+let baseURL = "";
+if (process.env.NODE_ENV === "development") {
+  baseURL = "http://localhost:3000/";
+} else if (process.env.NODE_ENV) {
+  baseURL = "http://netease.jamartin.top/";
+}
 
 const instance = axios.create({
   baseURL,
