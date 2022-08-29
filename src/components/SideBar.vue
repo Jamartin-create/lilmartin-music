@@ -115,7 +115,7 @@ export default {
   computed: {
     ...mapState({
       userProfile: (state) => state.user.data.profile,
-      sysSetting: (state) => state.sys.data,
+      sysSetting: (state) => state.sys.setting,
     }),
     menuSelected() {
       return this.$route.name ? this.$route.name : "home";

@@ -43,13 +43,12 @@
           :key="store.id"
           @click="toPlayListPage(store.id)"
         >
-          <div class="image">
-            <img :src="store.picUrl" alt="" loading="lazy" />
-            <div
-              class="shadow"
-              :style="{ backgroundImage: `url(${store.picUrl})` }"
-            ></div>
-          </div>
+          <CoverImage
+            :id="store.id"
+            :type="'playList'"
+            :image-url="store.picUrl"
+            :fixed-size="100"
+          ></CoverImage>
           <div class="store-title">{{ store.name }}</div>
         </div>
       </div>
@@ -72,11 +71,13 @@ import {
 // } from "@/api/mock";
 import nprogress from "nprogress";
 import Banner from "../Banner.vue";
+import CoverImage from "../CoverImage.vue";
 import { mapActions } from "vuex";
 
 export default {
   components: {
     Banner,
+    CoverImage,
   },
   data() {
     return {

@@ -1,9 +1,15 @@
 <template>
   <div class="content-page" id="play-list-page">
     <div class="play-list-info">
-      <div class="image">
+      <!-- <div class="image">
         <img :src="`${playListInfo.coverImgUrl}`" alt="" />
-      </div>
+      </div> -->
+      <CoverImage
+        :id="playListInfo.id"
+        :type="'playListDetail'"
+        :image-url="playListInfo.coverImgUrl"
+        :fixed-size="100"
+      ></CoverImage>
       <div class="info" v-if="playListInfo.name != ''">
         <div class="play-list-name">{{ playListInfo.name }}</div>
         <div class="other">
@@ -47,10 +53,11 @@
 import { getPlayListAllSongsById } from "@/api/playlist";
 import nprogress from "nprogress";
 import PlayList from "@/components/displayList/PlayList.vue";
-
+import CoverImage from "@/components/CoverImage.vue";
 export default {
   components: {
     PlayList,
+    CoverImage,
   },
   data() {
     return {

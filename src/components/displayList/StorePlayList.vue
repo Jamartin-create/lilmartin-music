@@ -6,13 +6,19 @@
       :key="playList.id"
       @click="toPlayListPage(playList.id)"
     >
-      <div class="store-cover-image">
+      <!-- <div class="store-cover-image">
         <img :src="playList.coverImgUrl" alt="" loading="lazy" />
         <div
           class="shadow"
           :style="{ backgroundImage: `url(${playList.coverImgUrl})` }"
         ></div>
-      </div>
+      </div> -->
+      <CoverImage
+        :id="playList.id"
+        :type="'playList'"
+        :image-url="playList.coverImgUrl"
+        :fixed-size="100"
+      ></CoverImage>
       <span class="store-title">{{ playList.name }}</span>
       <span class="store-creator"> by {{ playList.creator.nickname }}</span>
     </span>
@@ -20,8 +26,12 @@
 </template>
 
 <script>
+import CoverImage from "../CoverImage.vue";
 export default {
   props: ["playLists"],
+  components: {
+    CoverImage,
+  },
   data() {
     return {};
   },
