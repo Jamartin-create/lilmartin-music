@@ -11,11 +11,13 @@ import "@/assets/css/iconfont/iconfont.css";
 import Sider from "@/components/SideBar.vue";
 import Player from "@/components/Player.vue";
 import Pannel from "@/components/Pannel.vue";
+import Toast from "@/components/Toast.vue";
 
 Vue.config.productionTip = false;
 Vue.component(Sider.name, Sider);
 Vue.component(Player.name, Player);
 Vue.component(Pannel.name, Pannel);
+Vue.component(Toast.name, Toast);
 
 new Vue({
   router,

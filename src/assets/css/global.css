@@ -14,6 +14,7 @@
     --toggle-color: #ddd;
     --text-color: #707070;
     --music-process-color: rgb(61, 112, 223);
+    --toast-color: rgba(255, 255, 255, 0.88);
 
     /*过渡效果*/
     --tran-02: all 0.2s ease;
@@ -53,6 +54,7 @@ body.dark{
     --toggle-color: #fff;
     --text-color: #ccc;
     --music-process-color: rgb(241, 125, 141);
+    --toast-color: rgba(46, 46, 46, 0.68);
 }
 
 

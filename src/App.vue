@@ -7,12 +7,14 @@
       </keep-alive>
       <router-view v-if="!$route.meta.keepAlive"></router-view>
     </main>
+    <Toast></Toast>
     <player></player>
     <pannel></pannel>
   </div>
 </template>
 
 <script>
+import Toast from "./components/Toast.vue";
 export default {
   name: "App",
   create() {},
@@ -20,7 +22,7 @@ export default {
     //加载初始数据
     this.loadBasicData();
     //判断皮肤状态
-    if (!this.$store.state.sys.data.isLight) {
+    if (!this.$store.state.sys.setting.isLight) {
       document.querySelector("body").classList.add("dark");
     }
   },
@@ -30,6 +32,7 @@ export default {
       this.$store.dispatch("user/fetchUserPlayList");
     },
   },
+  components: { Toast },
 };
 </script>
 

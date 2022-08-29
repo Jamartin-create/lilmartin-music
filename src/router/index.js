@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
 import { isAccountLogin } from "@/util/auth";
+import store from "@/store";
 
 Vue.use(VueRouter);
 //重写push和replace方法（原本方法如果重复跳转同一页面的话会报错）
@@ -46,6 +47,7 @@ router.beforeEach((to, from, next) => {
     if (isAccountLogin()) {
       next();
     } else {
+      store.dispatch("sys/showToast", "此操作需要登陆");
       next({ path: "/login" });
     }
   } else {
