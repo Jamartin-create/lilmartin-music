@@ -1,6 +1,6 @@
 <template>
   <div class="content-page" id="play-list-page">
-    <div class="play-list-info">
+    <!-- <div class="play-list-info">
       <div class="image">
         <img :src="`${albumInfo.picUrl}`" alt="" />
       </div>
@@ -8,39 +8,26 @@
         <div class="play-list-name">{{ albumInfo.name }}</div>
         <div class="other">
           <div class="create-info">
-            <!-- <img :src="`${albumInfo.creator.avatarUrl}?param=224y224`" alt="" /> -->
             <div class="creator">歌手：</div>
             <div class="create-time">
               {{ albumInfo.artists | artists }}
             </div>
           </div>
           <div class="create-info">
-            <!-- <img :src="`${albumInfo.creator.avatarUrl}?param=224y224`" alt="" /> -->
             <div class="creator">时间：</div>
             <div class="create-time">
               {{ albumInfo.publishTime | formatTime("Human") }}
             </div>
           </div>
-          <!-- <div class="count-info">
-            <span class="count">
-              歌曲:
-              <span class="number">
-                {{ albumInfo.trackCount }}
-              </span>
-            </span>
-            <span class="count">
-              播放:
-              <span class="number">
-                {{ albumInfo.playCount }}
-              </span>
-            </span>
-          </div>
-          <div class="play-list-description">
-            {{ albumInfo.description }}
-          </div> -->
         </div>
       </div>
-    </div>
+    </div> -->
+    <ListPageHeader
+      :artistsInfo="headerSchema.artists"
+      :title="headerSchema.title"
+      :type="headerSchema.type"
+      :itemInfo="headerSchema.itemInfo"
+    ></ListPageHeader>
     <div class="subpage-wrapper">
       <PlayList :playList="playList" />
     </div>
@@ -51,10 +38,12 @@
 import { getAlbumInfo } from "@/api/album";
 import nprogress from "nprogress";
 import PlayList from "@/components/displayList/PlayList.vue";
+import ListPageHeader from "@/components/ListPageHeader.vue";
 
 export default {
   components: {
     PlayList,
+    ListPageHeader,
   },
   data() {
     return {
@@ -67,6 +56,12 @@ export default {
         artists: [], //创建者
         description: "", //描述
         publishTime: 0,
+      },
+      headerSchema: {
+        title: "",
+        type: "",
+        artists: [],
+        itemInfo: {},
       },
     };
   },
@@ -84,6 +79,14 @@ export default {
     this.getAlbumAllSongsById();
   },
   methods: {
+    transformDataToSchema(title, type, artists, itemInfo) {
+      this.headerSchema = {
+        title,
+        type,
+        artists,
+        itemInfo,
+      };
+    },
     async getAlbumAllSongsById() {
       try {
         nprogress.start();
@@ -91,6 +94,12 @@ export default {
           id: this.albumId,
         });
         if (res.code === 200) {
+          const data = res.album;
+          this.transformDataToSchema(data.name, "album", data.artists, {
+            coverImgUrl: data.picUrl,
+            description: data.description,
+            publishTime: data.publishTime,
+          });
           const { name, picUrl, artists, description, publishTime } = res.album;
           this.albumInfo = {
             name,

@@ -17,7 +17,7 @@
         :id="playList.id"
         :type="'playList'"
         :image-url="playList.coverImgUrl"
-        :fixed-size="100"
+        :fixed-size="150"
       ></CoverImage>
       <span class="store-title">{{ playList.name }}</span>
       <span class="store-creator"> by {{ playList.creator.nickname }}</span>
@@ -36,7 +36,9 @@ export default {
     return {};
   },
   watch: {},
-  mounted() {},
+  mounted() {
+    console.log(this.playLists);
+  },
   methods: {
     toPlayListPage(playListId) {
       this.$bus.$emit("replaylist", playListId);

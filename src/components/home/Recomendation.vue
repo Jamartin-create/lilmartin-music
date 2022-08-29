@@ -47,7 +47,7 @@
             :id="store.id"
             :type="'playList'"
             :image-url="store.picUrl"
-            :fixed-size="100"
+            :fixed-size="150"
           ></CoverImage>
           <div class="store-title">{{ store.name }}</div>
         </div>
@@ -136,6 +136,7 @@ export default {
       try {
         const res = await getRecomPlayList();
         if (res.code === 200) {
+          console.log(res);
           this.recPlayList = res.result;
         } else {
           console.log(res);

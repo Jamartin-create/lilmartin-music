@@ -44,8 +44,8 @@ export default {
     imageStyle() {
       let style = {};
       if (this.fixedSize !== 0) {
-        style.width = this.fixedSize;
-        style.height = this.fixedSize;
+        style.width = this.fixedSize + "px";
+        style.height = this.fixedSize + "px";
       }
       if (this.type === "artist") style.borderRadius = "50%";
       return style;
@@ -61,15 +61,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.cover-hover {
+#cover-image {
+  position: relative;
   &:hover {
     cursor: pointer;
   }
   .cover-container {
     position: relative;
     img {
-      border-radius: 0.75em;
       width: 100%;
+      border-radius: 0.75em;
       aspect-ratio: 1 / 1;
       border: 1px solid rgba(0, 0, 0, 0.04);
     }
