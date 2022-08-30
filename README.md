@@ -1,24 +1,13 @@
 # lilmartin-music
 
-## Project setup
-```
-yarn install
-```
+> 技术选型
+>
+> + Vue2+Vuex3+VueRouter3+Axios
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+### 关于
 
-### Compiles and minifies for production
-```
-yarn build
-```
+学完Vue之后一直没有巩固，拿来练手，后期会不定期更新新功能，欢迎 `star` 和 `issue`
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+>  灵感来源：[YesplayMusic](https://music.qier222.com/library)
+>
+> API：[Neteasecloudmusicapi](https://neteasecloudmusicapi.vercel.app)
