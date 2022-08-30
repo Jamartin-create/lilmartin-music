@@ -136,7 +136,6 @@ export default {
       try {
         const res = await getRecomPlayList();
         if (res.code === 200) {
-          console.log(res);
           this.recPlayList = res.result;
         } else {
           console.log(res);

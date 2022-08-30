@@ -86,7 +86,7 @@ export default {
   margin: 30px auto;
   height: 300px;
   max-width: 850px;
-  min-width: 850px;
+  min-width: 600px;
   .banner-wrapper {
     position: relative;
     height: 100%;

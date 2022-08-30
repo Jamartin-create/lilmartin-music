@@ -7,15 +7,13 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  name: "toast",
+  name: "Toast",
   computed: {
     ...mapState({
       toast: (state) => state.sys.toast,
     }),
   },
-  mounted() {
-    console.log(this.toast);
-  },
+  mounted() {},
 };
 </script>
 

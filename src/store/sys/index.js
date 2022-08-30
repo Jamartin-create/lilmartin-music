@@ -23,7 +23,6 @@ const actions = {
     commit("CHANGE_MODE");
   },
   showToast({ state, commit }, text) {
-    console.log(text);
     //先清除上次的定时
     if (state.toast.timer !== null) {
       clearTimeout(state.toast.timer);

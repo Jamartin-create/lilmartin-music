@@ -17,7 +17,6 @@ const actions = {
     const res = await getSongDetailById({
       ids: songsId,
     });
-    console.log(res);
     if (res.code === 200) {
       const { songs } = res;
       const songsInfo = {

@@ -15,7 +15,7 @@
 <script>
 import { getPlayListAllSongsById } from "@/api/playlist";
 import nprogress from "nprogress";
-import PlayList from "@/components/displayList/PlayList.vue";
+import PlayList from "@/components/List_Components/PlayList.vue";
 import CoverImage from "@/components/CoverImage.vue";
 import ListPageHeader from "@/components/ListPageHeader.vue";
 export default {

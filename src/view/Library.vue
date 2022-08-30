@@ -33,9 +33,9 @@
 import { getUserAlbumList, getUserMvList, getUserPlayList } from "@/api/user";
 import { mapState } from "vuex";
 import { libraryNavBarList } from "@/js/navBarLists";
-import StorePlayList from "@/components/displayList/StorePlayList.vue";
-import MVList from "@/components/displayList/MVList.vue";
-import AlbumList from "@/components/displayList/AlbumList.vue";
+import StorePlayList from "@/components/List_Components/StorePlayList.vue";
+import MVList from "@/components/List_Components/MVList.vue";
+import AlbumList from "@/components/List_Components/AlbumList.vue";
 import nprogress from "nprogress";
 export default {
   data() {

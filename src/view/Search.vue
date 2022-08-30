@@ -24,8 +24,8 @@
 
 <script>
 import { searchByKeywords } from "@/api/playlist";
-import PlayList from "@/components/displayList/PlayList.vue";
-import AlbumList from "@/components/displayList/AlbumList.vue";
+import PlayList from "@/components/List_Components/PlayList.vue";
+import AlbumList from "@/components/List_Components/AlbumList.vue";
 import { searchNavBarList } from "@/js/navBarLists";
 import nprogress from "nprogress";
 
@@ -42,11 +42,7 @@ export default {
     };
   },
   computed: {},
-  watch: {
-    $route: function (to, from) {
-      console.log(to, from);
-    },
-  },
+  watch: {},
   mounted() {
     this.$bus.$on("research", async (keywords) => {
       this.keywords = keywords;

@@ -15,7 +15,7 @@
 <script>
 import { getAlbumInfo } from "@/api/album";
 import nprogress from "nprogress";
-import PlayList from "@/components/displayList/PlayList.vue";
+import PlayList from "@/components/List_Components/PlayList.vue";
 import ListPageHeader from "@/components/ListPageHeader.vue";
 
 export default {
@@ -43,11 +43,7 @@ export default {
       },
     };
   },
-  watched: {
-    "$route.query": function (to, from) {
-      console.log(to, from);
-    },
-  },
+  watched: {},
   mounted() {
     this.$bus.$on("realbum", async (id) => {
       this.albumId = id;

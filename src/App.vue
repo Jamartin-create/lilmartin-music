@@ -49,14 +49,16 @@ main {
   top: 0;
   left: var(--sidebar-width);
   height: calc(100% - var(--player-height));
-  width: calc(100% - var(--sidebar-width) - var(--pannel-width));
+  // width: calc(100% - var(--sidebar-width) - var(--pannel-width));
+  width: calc(100% - var(--sidebar-width));
   transition: var(--tran-03);
   padding: 10px 14px;
 }
 
 #sidebar.close ~ main {
   left: var(--sidebar-close-width);
-  width: calc(100% - var(--sidebar-close-width) - var(--pannel-width));
+  // width: calc(100% - var(--sidebar-close-width) - var(--pannel-width));
+  width: calc(100% - var(--sidebar-close-width));
   transition: var(--tran-03);
 }
 

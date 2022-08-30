@@ -230,7 +230,7 @@ export default {
     //监听音乐进度
     listenProcess() {
       document.getElementById("audio").addEventListener("play", () => {
-        console.log("开始");
+        // console.log("开始");
       });
       document.getElementById("audio").addEventListener("ended", () => {
         if (this.selectCircleMode === 1) this.play(this.curSongs.index);
