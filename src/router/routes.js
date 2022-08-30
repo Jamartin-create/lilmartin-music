@@ -2,7 +2,7 @@ export default [
   {
     path: "/",
     name: "home",
-    component: () => import("@/view/Mine.vue"),
+    component: () => import("@/view/Home.vue"),
     meta: {
       requireLogin: false,
       keepAlive: true,

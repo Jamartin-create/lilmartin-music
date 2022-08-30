@@ -19,7 +19,11 @@
       <div class="play-list-name">{{ title }}</div>
       <div class="other" v-if="type === 'playList'">
         <div class="create-info">
-          <img :src="`${creatorInfo.avatarUrl}?param=224y224`" alt="" />
+          <img
+            :src="`${creatorInfo.avatarUrl}?param=224y224`"
+            alt=""
+            loading="preload"
+          />
           <div class="creator">{{ creatorInfo.nickname }}</div>
           <div class="create-time">
             {{ itemInfo.createTime | formatTime("Human") }} 创建

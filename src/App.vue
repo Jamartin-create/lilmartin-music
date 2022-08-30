@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import Toast from "./components/Toast.vue";
 export default {
   name: "App",
   create() {},
@@ -32,7 +31,6 @@ export default {
       this.$store.dispatch("user/fetchUserPlayList");
     },
   },
-  components: { Toast },
 };
 </script>
 

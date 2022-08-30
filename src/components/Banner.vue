@@ -85,8 +85,8 @@ export default {
   position: relative;
   margin: 30px auto;
   height: 300px;
-  max-width: 1200px;
-  min-width: 660px;
+  max-width: 850px;
+  min-width: 850px;
   .banner-wrapper {
     position: relative;
     height: 100%;
@@ -126,12 +126,12 @@ export default {
         }
       }
       &.left {
-        left: 8%;
+        left: 2%;
         transform: translateX(0) translateY(60%);
         z-index: 50;
       }
       &.right {
-        left: 92%;
+        left: 98%;
         transform: translateX(-100%) translateY(60%);
         z-index: 50;
       }
@@ -158,15 +158,16 @@ export default {
     }
   }
   #left-arrow {
-    left: 1%;
+    left: 2%;
     transform: translateY(-50%);
   }
   #right-arrow {
-    right: 1%;
+    right: 2%;
     transform: translateY(-50%) rotate(180deg);
   }
   .pagenation-wrapper {
-    margin-top: 10px;
+    position: absolute;
+    top: 85%;
     width: 100%;
     display: flex;
     justify-content: center;

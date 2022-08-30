@@ -1,27 +1,5 @@
 <template>
   <div class="content-page" id="play-list-page">
-    <!-- <div class="play-list-info">
-      <div class="image">
-        <img :src="`${albumInfo.picUrl}`" alt="" />
-      </div>
-      <div class="info" v-if="albumInfo.name != ''">
-        <div class="play-list-name">{{ albumInfo.name }}</div>
-        <div class="other">
-          <div class="create-info">
-            <div class="creator">歌手：</div>
-            <div class="create-time">
-              {{ albumInfo.artists | artists }}
-            </div>
-          </div>
-          <div class="create-info">
-            <div class="creator">时间：</div>
-            <div class="create-time">
-              {{ albumInfo.publishTime | formatTime("Human") }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <ListPageHeader
       :artistsInfo="headerSchema.artists"
       :title="headerSchema.title"

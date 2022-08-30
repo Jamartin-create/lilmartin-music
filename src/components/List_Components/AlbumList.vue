@@ -6,9 +6,16 @@
       :key="album.id"
       @click="toAlbumPage(album.id)"
     >
-      <div class="album-image">
+      <!-- <div class="album-image">
         <img :src="album.picUrl" alt="" loading="lazy" />
-      </div>
+      </div> -->
+      <CoverImage
+        :id="album.id"
+        :fixed-size="80"
+        :type="'album'"
+        :image-url="album.picUrl"
+        :cover-hover="false"
+      ></CoverImage>
       <div class="album-title">
         {{ album.name }}
         <span class="album-alias">
@@ -22,6 +29,7 @@
 </template>
 
 <script>
+import CoverImage from "../CoverImage.vue";
 export default {
   props: ["albumLists"],
   data() {
@@ -34,6 +42,7 @@ export default {
       this.$router.push({ name: "album", query: { id: albumId } });
     },
   },
+  components: { CoverImage },
 };
 </script>
 
@@ -45,7 +54,7 @@ export default {
     align-items: center;
     margin: 10px auto;
     padding: 1% 1%;
-    border-radius: 6px;
+    border-radius: 12px;
     transition: var(--tran-03);
     &:hover {
       background-color: var(--primary-color);

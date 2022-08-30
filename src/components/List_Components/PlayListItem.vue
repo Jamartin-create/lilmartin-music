@@ -12,7 +12,11 @@
         </span>
       </span>
       <span class="item-info">{{ songsInfo.artists | artists }}</span>
-      <span class="item-info">{{ songsInfo.album.name }}</span>
+      <span class="item-info">
+        <div class="text-link" @click="toAlbumPage(songsInfo.album.id)">
+          {{ songsInfo.album.name }}
+        </div></span
+      >
       <span class="item-info">{{ songsInfo.duration | formatTime }}</span>
     </div>
   </div>
@@ -33,6 +37,10 @@ export default {
     openPlayer(songsId, index) {
       this.changePlayList(this.$parent.playList);
       this.$bus.$emit("changeMusic", { songsId, index });
+    },
+    toAlbumPage(albumId) {
+      this.$bus.$emit("realbum", albumId);
+      this.$router.push({ name: "album", query: { id: albumId } });
     },
   },
 };
@@ -78,6 +86,15 @@ export default {
       &:nth-child(4) {
         width: 10%;
         text-align: right;
+      }
+    }
+    .text-link {
+      display: inline;
+      width: auto;
+      &:hover {
+        text-decoration: solid;
+        text-decoration-color: var(--primary-color-light);
+        text-decoration-line: underline;
       }
     }
   }

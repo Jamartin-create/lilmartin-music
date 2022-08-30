@@ -8,10 +8,10 @@ import "nprogress/nprogress.css";
 import "@/assets/css/iconfont/iconfont";
 import "@/assets/css/iconfont/iconfont.css";
 
-import Sider from "@/components/SideBar.vue";
-import Player from "@/components/Player.vue";
-import Pannel from "@/components/Pannel.vue";
-import Toast from "@/components/Toast.vue";
+import Sider from "@/components/Global_Components/SideBar.vue";
+import Player from "@/components/Global_Components/Player.vue";
+import Pannel from "@/components/Global_Components/Pannel.vue";
+import Toast from "@/components/Global_Components/Toast.vue";
 
 Vue.config.productionTip = false;
 Vue.component(Sider.name, Sider);

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Recomendation from "@/components/home/Recomendation.vue";
+import Recomendation from "@/components/Page_Components/Recomendation.vue";
 import { homePageNavBarList } from "@/js/navBarLists";
 export default {
   name: "mine-music",
