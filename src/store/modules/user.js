@@ -14,8 +14,13 @@ if (localStorage.getItem("data") === null) {
 //刷新localstorage
 updataApp();
 
+const data = JSON.parse(localStorage.getItem("data"));
+
 const state = {
-  ...(JSON.parse(localStorage.getItem("data")) ?? {}),
+  profile: data.profile,
+  likedSongPlaylistID: data.likedSongPlaylistID,
+  lastRefreshCookieDate: data.lastRefreshCookieDate,
+  loginMode: data.loginMode,
 };
 
 const getters = {};
@@ -32,7 +37,6 @@ const actions = {
     const res = await getUserAccount();
     nProgress.done();
     if (res.code === 200 && res.account != null) {
-      console.log(res);
       const provinceInfo = {
         provinceName: "未知",
         provinceLabel: "Unknow",
@@ -63,7 +67,7 @@ const actions = {
     if (isAccountLogin()) {
       nProgress.start();
       return getUserPlayList({
-        uid: state.data.profile.userId,
+        uid: state.profile.userId,
         limit: 2000,
       }).then((res) => {
         nProgress.done();
@@ -79,11 +83,11 @@ const actions = {
 const mutations = {
   //更新账户信息
   UPDATE_USER_PROFILE(state, data) {
-    state.data.profile = data;
+    state.profile = data;
   },
   //更新登录模式（账户登录或其他）
   UPDATE_USER_LOGIN_MODE(state, data) {
-    state.data.loginMode = data;
+    state.loginMode = data;
   },
   //更新歌单
   UPDATE_USER_PLAY_LIST(state, data) {
@@ -91,7 +95,7 @@ const mutations = {
   },
   //更新我喜欢的音乐歌单id
   UPDATE_USER_LIKE_PLAY_LIST_ID(state, data) {
-    state.data.likeSongPlayListId = data;
+    state.likeSongPlayListId = data;
   },
 };
 

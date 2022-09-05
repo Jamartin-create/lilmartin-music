@@ -9,7 +9,7 @@ export default (store) => {
         "user/UPDATE_USER_LIKE_PLAY_LIST_ID",
       ].includes(mutations.type)
     ) {
-      localStorage.setItem("data", JSON.stringify(state.user.data));
+      localStorage.setItem("data", JSON.stringify(state.user));
     } else if (
       ["playList/CHANGE_CUR_SONGS", "CHANGE_PLAY_LIST"].includes(mutations.type)
     ) {

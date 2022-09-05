@@ -24,8 +24,8 @@ const actions = {
     });
     const musicUrl = await getSonsUrl({
       id: songsId,
+      level: "standard",
     });
-    console.log(musicUrl);
     if (res.code === 200) {
       const { songs } = res;
       const songsInfo = {

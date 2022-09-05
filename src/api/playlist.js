@@ -23,11 +23,10 @@ export const searchByKeywords = (params) => {
 export const getSonsUrl = (params) => {
   return request({
     method: "get",
-    url: "/song/url",
+    url: "/song/url/v1",
     params: {
       ...params,
       timestamp: new Date().getTime(),
-      br: 320000,
     },
   });
 };

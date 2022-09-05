@@ -46,7 +46,7 @@ export function isAccountLogin() {
   return (
     getCookie("MUSIC_U") &&
     getCookie("MUSIC_U") !== undefined &&
-    store.state.user.data.loginMode === "account"
+    store.state.user.loginMode === "account"
   );
 }
 

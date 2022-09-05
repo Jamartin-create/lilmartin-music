@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     ...mapState({
-      userProfile: (state) => state.user.data.profile,
+      userProfile: (state) => state.user.profile,
     }),
   },
   mounted() {
