@@ -1,12 +1,12 @@
-import sysSetting from "./sysInitLocalStorage";
+import myLocalStorage from "@/store/defaultLocalStorage";
 
 if (localStorage.getItem("sysSetting") === null) {
-  localStorage.setItem("sysSetting", JSON.stringify(sysSetting));
+  localStorage.setItem("sysSetting", JSON.stringify(myLocalStorage.sysData));
 }
 
 const state = {
   //系统配置
-  setting: JSON.parse(localStorage.getItem("sysSetting")) ?? {},
+  setting: { ...(JSON.parse(localStorage.getItem("sysSetting")) ?? {}) },
   //消息弹窗
   toast: {
     show: false,
@@ -18,10 +18,19 @@ const state = {
 const getters = {};
 
 const actions = {
+  /**
+   * @description 切换夜间、白天模式
+   * @param {*} context
+   */
   changeMode({ commit }) {
     document.querySelector("body").classList.toggle("dark");
     commit("CHANGE_MODE");
   },
+  /**
+   * @description 提示信息
+   * @param {*} param0
+   * @param {*} text 提示
+   */
   showToast({ state, commit }, text) {
     //先清除上次的定时
     if (state.toast.timer !== null) {
@@ -58,7 +67,6 @@ const mutations = {
 };
 
 export default {
-  namespaced: true,
   state,
   getters,
   actions,

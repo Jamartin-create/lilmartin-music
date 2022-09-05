@@ -21,10 +21,9 @@ export default {
 #toast {
   position: fixed;
   font-weight: bolder;
-  top: 5%;
-  left: 50%;
+  top: 2%;
+  right: 2%;
   z-index: 1000;
-  transform: translate(-50%, -50%);
   font-size: 16px;
   color: var(--color-text);
   background: var(--toast-color);

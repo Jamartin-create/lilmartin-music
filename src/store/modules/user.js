@@ -1,30 +1,28 @@
-/**
- * vuex：user模块
- */
-import { isLoging, isAccountLogin } from "@/util/auth";
+import { isLoging, isAccountLogin, doLogout } from "@/util/auth";
 import { getUserAccount, getUserPlayList } from "@/api/user";
 import updataApp from "@/util/updataApp";
-import mylocalStorage from "./userInitLocalStorage";
-import provinces from "./provinces";
+import myLocalStorage from "@/store/defaultLocalStorage";
+import provinces from "../dataSource/provinces";
 import nProgress from "nprogress";
+import store from "@/store";
+import router from "@/router";
 
 if (localStorage.getItem("data") === null) {
-  localStorage.setItem("data", JSON.stringify(mylocalStorage.data));
+  localStorage.setItem("data", JSON.stringify(myLocalStorage.userData));
 }
 
 //刷新localstorage
 updataApp();
 
 const state = {
-  data: JSON.parse(localStorage.getItem("data")) ?? {},
-  playLists: [], //歌单列表
+  ...(JSON.parse(localStorage.getItem("data")) ?? {}),
 };
 
 const getters = {};
 
 const actions = {
   /**
-   * 获取用户信息
+   * @description 获取用户信息
    * @param {Object} context store上下文对象
    * @returns
    */
@@ -33,7 +31,8 @@ const actions = {
     nProgress.start();
     const res = await getUserAccount();
     nProgress.done();
-    if (res.code === 200) {
+    if (res.code === 200 && res.account != null) {
+      console.log(res);
       const provinceInfo = {
         provinceName: "未知",
         provinceLabel: "Unknow",
@@ -48,10 +47,14 @@ const actions = {
         ...res.profile,
         ...provinceInfo,
       });
+    } else {
+      store.dispatch("sys/showToast", "获取账号信息失败，请重新登录");
+      doLogout();
+      router.dispatch({ name: "login" });
     }
   },
   /**
-   * 获取用户的歌单
+   * @description 获取用户的歌单
    * @param {Object} context
    * @returns
    */
@@ -93,7 +96,6 @@ const mutations = {
 };
 
 export default {
-  namespaced: true,
   state,
   getters,
   actions,

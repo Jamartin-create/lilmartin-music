@@ -114,7 +114,7 @@ export default {
   },
   computed: {
     ...mapState({
-      userProfile: (state) => state.user.data.profile,
+      userProfile: (state) => state.user.profile,
       sysSetting: (state) => state.sys.setting,
     }),
     menuSelected() {

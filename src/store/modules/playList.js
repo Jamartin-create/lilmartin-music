@@ -1,18 +1,23 @@
-import playList from "./playListInitLocalStorage";
+/**
+ * @description 控制播放列表
+ */
+import myLocalStorage from "@/store/defaultLocalStorage";
 import { getSongDetailById } from "@/api/playlist";
-import nProgress from "nprogress";
 
 if (localStorage.getItem("playList") === null) {
-  localStorage.setItem("playList", JSON.stringify(playList));
+  localStorage.setItem("playList", JSON.stringify(myLocalStorage.playListData));
 }
 
 const state = {
   ...(JSON.parse(localStorage.getItem("playList")) ?? {}),
 };
-
 const getters = {};
-
 const actions = {
+  /**
+   * @description 切歌
+   * @param {*} context
+   * @param {*} data
+   */
   async changeCurSongs({ commit }, { songsId, index }) {
     const res = await getSongDetailById({
       ids: songsId,
@@ -32,6 +37,11 @@ const actions = {
       commit("CHANGE_CUR_SONGS", songsInfo);
     }
   },
+  /**
+   * @description 更新当前播放列表
+   * @param {*} context
+   * @param {*} list 歌单列表
+   */
   async changePlayList({ commit }, list = []) {
     commit(
       "CHANGE_PLAY_LIST",
@@ -39,7 +49,6 @@ const actions = {
     );
   },
 };
-
 const mutations = {
   CHANGE_CUR_SONGS(state, data) {
     state.curSongs = data;
@@ -50,7 +59,6 @@ const mutations = {
 };
 
 export default {
-  namespaced: true,
   state,
   getters,
   actions,
