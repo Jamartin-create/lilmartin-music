@@ -2,7 +2,7 @@
  * @description 控制播放列表
  */
 import myLocalStorage from "@/store/defaultLocalStorage";
-import { getSongDetailById } from "@/api/playlist";
+import { getSongDetailById, getSonsUrl } from "@/api/playlist";
 
 if (localStorage.getItem("playList") === null) {
   localStorage.setItem("playList", JSON.stringify(myLocalStorage.playListData));
@@ -22,6 +22,10 @@ const actions = {
     const res = await getSongDetailById({
       ids: songsId,
     });
+    const musicUrl = await getSonsUrl({
+      id: songsId,
+    });
+    console.log(musicUrl);
     if (res.code === 200) {
       const { songs } = res;
       const songsInfo = {
@@ -31,7 +35,7 @@ const actions = {
         pic: songs[0].al.picUrl,
         alia: songs[0].alia,
         singer: songs[0].ar,
-        url: `https://music.163.com/song/media/outer/url?id=${songsId}.mp3`,
+        url: musicUrl.data[0].url,
         duration: songs[0].dt,
       };
       commit("CHANGE_CUR_SONGS", songsInfo);

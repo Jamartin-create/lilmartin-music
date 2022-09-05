@@ -27,6 +27,7 @@ export const getSonsUrl = (params) => {
     params: {
       ...params,
       timestamp: new Date().getTime(),
+      br: 320000,
     },
   });
 };
