@@ -6,8 +6,10 @@
 
 ### 关于
 
-学完Vue之后一直没有巩固，拿来练手，后期会不定期更新新功能，欢迎 `star` 和 `issue`
+后期会不定期更新新功能，欢迎 `star` 和 `issue`
 
 >  灵感来源：[YesplayMusic](https://music.qier222.com/library)
 >
 > API：[Neteasecloudmusicapi](https://neteasecloudmusicapi.vercel.app)
+> 
+> 其他版本：[LilMartinMusicV3](http://test.jamartin.top/#/login)
